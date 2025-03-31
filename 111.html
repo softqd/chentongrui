@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>相对定位与绝对定位</title>
+    <style type="text/css">
+      body {
+        width:960px;
+        margin: 0 auto;
+        font-family: 微软雅黑；
+        font-size: 18px;
+        line-height: 1.8em;
+      }
+      div {
+        width: 300px;
+        float: left;
+      }
+      .relative {
+        position: relative;
+        top:150px;
+      }
+      .absolute {
+        position: absolute;
+        top:150px;
+      }
+      .bg {
+        background-color: #fcc;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h2>余光中</h2>
+      <p>小时候</p >
+      <p>乡愁是一枚小小的邮票</p >
+      <p class="bg">我在这头</p >
+      <p>母亲在那头"</p >
+      <p>长大后</p >
+    </div>
+    <div>
+      <h2>相对定位</h2>
+      <p>乡愁是一张窄窄的船票</p >
+      <p>我在这头</p >
+      <p class="bg relative">新娘在那头</p >
+      <p>后来啊"</p >
+      <p>乡愁是一方矮矮的坟墓</p >
+      <code>.relative { position: relative; top:150px;}</code>
+    </div>
+    <div>
+      <h2>绝对定位</h2>
+      <p>乡愁是一张窄窄的船票</p >
+      <p>我在这头</p >
+      <p class="bg absolute">新娘在那头</p >
+      <p>后来啊"</p >
+      <p>乡愁是一方矮矮的坟墓</p >
+      <code>.absolute {
+        position: absolute;
+        top:150px;}
+      </code>
+    </div>
+  </body>
+</html>
