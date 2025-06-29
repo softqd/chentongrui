@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 语法学习</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 3.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        
+        .subtitle {
+            color: #ffcc00;
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card-header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .card-body {
+            padding: 25px;
+            min-height: 250px;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .keyword {
+            color: #f92672;
+        }
+        
+        .function {
+            color: #66d9ef;
+        }
+        
+        .string {
+            color: #a6e22e;
+        }
+        
+        .comment {
+            color: #75715e;
+        }
+        
+        .output {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            font-family: monospace;
+            min-height: 80px;
+        }
+        
+        .console-output {
+            white-space: pre;
+        }
+        
+        .interactive-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #2980b9;
+        }
+        
+        .dom-demo {
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 15px 0;
+        }
+        
+        .dom-demo:hover {
+            background: #bbdefb;
+            transform: scale(1.02);
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            margin-top: 40px;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="main-title">JavaScript 语法学习</h1>
+            <p class="subtitle">探索类与对象、回调函数、DOM操作等核心概念</p>
+        </header>
+        
+        <div class="content-grid">
+            <!-- 类与对象卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    类与对象
+                </div>
+                <div class="card-body">
+                    <div class="code-block">
+<span class="keyword">class</span> <span class="function">Car</span> {
+  <span class="function">constructor</span>(brand, model, year) {
+    <span class="keyword">this</span>.brand = brand;
+    <span class="keyword">this</span>.model = model;
+    <span class="keyword">this</span>.year = year;
+  }
+  
+  <span class="function">start</span>() {
+    console.log(<span class="string">`汽车 ${this.brand} ${this.model} 启动了`</span>);
+  }
+  
+  <span class="function">stop</span>() {
+    console.log(<span class="string">`汽车 ${this.brand} ${this.model} 停止了`</span>);
+  }
+}
+
+<span class="keyword">class</span> <span class="function">ElectricCar</span> <span class="keyword">extends</span> Car {
+  <span class="function">constructor</span>(brand, model, year, range) {
+    <span class="keyword">super</span>(brand, model, year);
+    <span class="keyword">this</span>.range = range;
+  }
+  
+  <span class="function">charge</span>() {
+    console.log(<span class="string">`电动汽车 ${this.brand} ${this.model} 正在充电`</span>);
+  }
+}
+                    </div>
+                    
+                    <div class="interactive-area">
+                        <button id="create-car">创建汽车对象</button>
+                        <button id="create-electric-car">创建电动汽车对象</button>
+                    </div>
+                    
+                    <div class="output" id="car-output">
+                        <!-- 输出将在这里显示 -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 回调函数卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    回调函数与异步
+                </div>
+                <div class="card-body">
+                    <div class="code-block">
+console.log(<span class="string">'111111'</span>);
+
+setTimeout(<span class="keyword">function</span> () {
+  console.log(<span class="string">'22222'</span>);
+}, 2000);
+
+console.log(<span class="string">'333333'</span>);
+                    </div>
+                    
+                    <div class="interactive-area">
+                        <button id="run-callback">运行回调示例</button>
+                        <button id="simulate-fetch">模拟API请求</button>
+                    </div>
+                    
+                    <div class="output">
+                        <pre class="console-output" id="callback-output">控制台输出将显示在这里...</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DOM操作卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    DOM操作
+                </div>
+                <div class="card-body">
+                    <div class="code-block">
+<span class="keyword">const</span> myDom = document.getElementById(<span class="string">'demo'</span>);
+console.log(myDom);
+myDom.innerHTML = <span class="string">'这是从脚本动态更改的内容'</span>;
+myDom.onclick = <span class="keyword">function</span> () {
+  alert(<span class="string">'我也被点击了！'</span>);
+};
+                    </div>
+                    
+                    <div class="dom-demo" id="demo">
+                        div content - 点击我试试！
+                    </div>
+                    
+                    <div class="interactive-area">
+                        <button id="change-text">更改文本</button>
+                        <button id="change-color">更改颜色</button>
+                        <button id="reset-dom">重置DOM</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>JavaScript 学习示例 | 使用现代JavaScript语法 | 2023年</p>
+        </footer>
+    </div>
+
+    <script>
+        // 类和对象示例
+        class Car {
+            constructor(brand, model, year) {
+                this.brand = brand;
+                this.model = model;
+                this.year = year;
+            }
+            
+            start() {
+                return `汽车 ${this.brand} ${this.model} 启动了`;
+            }
+            
+            stop() {
+                return `汽车 ${this.brand} ${this.model} 停止了`;
+            }
+            
+            getInfo() {
+                return `${this.year}款 ${this.brand} ${this.model}`;
+            }
+        }
+
+        class ElectricCar extends Car {
+            constructor(brand, model, year, range) {
+                super(brand, model, year);
+                this.range = range;
+            }
+            
+            charge() {
+                return `电动汽车 ${this.brand} ${this.model} 正在充电，续航里程：${this.range}公里`;
+            }
+            
+            getInfo() {
+                return `${super.getInfo()} | 电动版 | 续航: ${this.range}公里`;
+            }
+        }
+
+        // DOM元素
+        const carOutput = document.getElementById('car-output');
+        const callbackOutput = document.getElementById('callback-output');
+        const demoDiv = document.getElementById('demo');
+        const mainTitle = document.getElementById('main-title');
+
+        // 创建汽车对象
+        document.getElementById('create-car').addEventListener('click', () => {
+            const myCar = new Car('Mi', 'Yu7', 2025);
+            carOutput.innerHTML = `
+                <p>创建了普通汽车对象</p>
+                <p>${myCar.getInfo()}</p>
+                <p>${myCar.start()}</p>
+                <p>${myCar.stop()}</p>
+            `;
+        });
+
+        // 创建电动汽车对象
+        document.getElementById('create-electric-car').addEventListener('click', () => {
+            const myElectricCar = new ElectricCar('Tesla', 'Model Y', 2025, 300);
+            carOutput.innerHTML = `
+                <p>创建了电动汽车对象</p>
+                <p>${myElectricCar.getInfo()}</p>
+                <p>${myElectricCar.start()}</p>
+                <p>${myElectricCar.charge()}</p>
+            `;
+        });
+
+        // 运行回调示例
+        document.getElementById('run-callback').addEventListener('click', () => {
+            callbackOutput.textContent = '';
+            
+            callbackOutput.textContent += '111111\n';
+            
+            setTimeout(() => {
+                callbackOutput.textContent += '22222 (2秒后显示)\n';
+            }, 2000);
+            
+            callbackOutput.textContent += '333333\n';
+        });
+
+        // 模拟API请求
+        document.getElementById('simulate-fetch').addEventListener('click', () => {
+            callbackOutput.textContent = '发送API请求...\n';
+            
+            setTimeout(() => {
+                callbackOutput.textContent += '正在处理数据...\n';
+                
+                setTimeout(() => {
+                    callbackOutput.textContent += '请求成功！\n';
+                    callbackOutput.textContent += '返回数据: { id: 1, name: "JavaScript", version: "ES2023" }\n';
+                }, 1000);
+            }, 1500);
+        });
+
+        // DOM操作
+        demoDiv.addEventListener('click', function() {
+            alert('我也被点击了！');
+        });
+
+        document.getElementById('change-text').addEventListener('click', () => {
+            demoDiv.innerHTML = '文本已被更改！' + new Date().toLocaleTimeString();
+            demoDiv.style.backgroundColor = '#d1ecf1';
+        });
+
+        document.getElementById('change-color').addEventListener('click', () => {
+            const colors = ['#ffcccc', '#ccffcc', '#ccccff', '#ffffcc', '#ffccff'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            demoDiv.style.backgroundColor = randomColor;
+            demoDiv.innerHTML = '背景颜色已更改！';
+        });
+
+        document.getElementById('reset-dom').addEventListener('click', () => {
+            demoDiv.innerHTML = 'div content - 点击我试试！';
+            demoDiv.style.backgroundColor = '#e3f2fd';
+        });
+
+        // 页面加载时执行一些操作
+        window.addEventListener('DOMContentLoaded', () => {
+            // 添加标题动画
+            mainTitle.addEventListener('click', () => {
+                alert('欢迎学习JavaScript语法！');
+            });
+            
+            // 初始控制台输出
+            callbackOutput.textContent = '点击按钮运行示例...';
+        });
+    </script>
+</body>
+</html>

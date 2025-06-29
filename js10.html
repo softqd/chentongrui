@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 异步编程练习</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            color: #61dafb;
+            text-shadow: 0 0 10px rgba(97, 218, 251, 0.5);
+        }
+        
+        .description {
+            background: rgba(40, 44, 52, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .code-block {
+            background: #282c34;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Consolas', monospace;
+            overflow-x: auto;
+        }
+        
+        .panel {
+            background: rgba(30, 35, 45, 0.9);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .panel h2 {
+            color: #61dafb;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .panel h2 i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .result-box {
+            background: #20232a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #61dafb;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .btn {
+            background: #61dafb;
+            color: #20232a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #4fc1e9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .console {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+        
+        .success {
+            color: #4caf50;
+        }
+        
+        .error {
+            color: #f44336;
+        }
+        
+        .repo-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .repo-card {
+            background: rgba(40, 44, 52, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+            width: 45%;
+            margin: 10px;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .repo-card {
+                width: 100%;
+            }
+        }
+        
+        .timestamp {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>JavaScript 异步编程练习</h1>
+        
+        <div class="description">
+            <p>本示例演示了JavaScript中的异步编程技术：</p>
+            <ul>
+                <li>使用 <code>async/await</code> 处理异步操作</li>
+                <li>使用 <code>fetch</code> API 获取数据</li>
+                <li>使用 <code>Promise</code> 处理定时器</li>
+                <li>错误处理和链式调用</li>
+            </ul>
+        </div>
+        
+        <div class="panel">
+            <h2><i>⏱️</i> 定时器异步操作</h2>
+            <div class="code-block">
+                async function getSomething() {
+                  return new Promise(resolve => {
+                    setTimeout(() => {
+                      console.log('111111 - 模拟异步操作完成');
+                      resolve('操作完成');
+                    }, 2000);
+                  });
+                }
+            </div>
+            <button id="timerBtn" class="btn"><i>⚡</i> 执行定时器操作</button>
+            <div id="timerResult" class="result-box">
+                点击按钮执行异步定时器操作
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2><i>🌐</i> GitHub API 数据获取</h2>
+            <div class="code-block">
+                async function getLastPushedDate(owner, repo) {
+                  const url = `https://api.github.com/repos/${owner}/${repo}`;
+                  try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('网络响应失败');
+                    const data = await response.json();
+                    return {
+                      pushed_at: data.pushed_at,
+                      stargazers_count: data.stargazers_count,
+                      forks_count: data.forks_count
+                    };
+                  } catch (error) {
+                    console.error('获取数据失败:', error);
+                    throw error;
+                  }
+                }
+            </div>
+            <div class="repo-info">
+                <div class="repo-card">
+                    <h3>yangjh-xbmu/Web-develop</h3>
+                    <button id="githubBtn" class="btn"><i>🐙</i> 获取仓库信息</button>
+                </div>
+                <div class="repo-card">
+                    <h3>vuejs/vue</h3>
+                    <button id="vueBtn" class="btn"><i>🟢</i> 获取Vue仓库信息</button>
+                </div>
+            </div>
+            <div id="githubResult" class="result-box">
+                选择要查询的GitHub仓库
+            </div>
+        </div>
+        
+        <div class="panel">
+            <h2><i>💻</i> 控制台输出</h2>
+            <div id="consoleOutput" class="console">控制台输出将显示在这里...</div>
+        </div>
+    </div>
+
+    <script>
+        // 重写控制台输出，在页面和控制台同时显示
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        const consoleOutput = document.getElementById('consoleOutput');
+        
+        console.log = function(...args) {
+            originalConsoleLog.apply(console, args);
+            const message = args.map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg
+            ).join(' ');
+            consoleOutput.innerHTML += `<div>${message}</div>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+        
+        console.error = function(...args) {
+            originalConsoleError.apply(console, args);
+            const message = args.map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg, null, 2) : arg
+            ).join(' ');
+            consoleOutput.innerHTML += `<div class="error">${message}</div>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+        
+        // 改进的异步定时器函数
+        async function getSomething() {
+            return new Promise(resolve => {
+                setTimeout(function() {
+                    console.log('111111 - 模拟异步操作完成');
+                    resolve('异步操作成功完成');
+                }, 2000);
+            });
+        }
+        
+        // 改进的GitHub数据获取函数
+        async function getLastPushedDate(owner, repo) {
+            const url = `https://api.github.com/repos/${owner}/${repo}`;
+            const resultElement = document.getElementById('githubResult');
+            
+            try {
+                resultElement.innerHTML = '<div class="loading"></div> 获取数据中...';
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`网络响应失败: ${response.status} ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // 返回更多有用信息
+                return {
+                    pushed_at: data.pushed_at,
+                    stargazers_count: data.stargazers_count,
+                    forks_count: data.forks_count,
+                    full_name: data.full_name,
+                    html_url: data.html_url,
+                    description: data.description || '暂无描述'
+                };
+            } catch (error) {
+                console.error(`获取 ${owner}/${repo} 数据失败:`, error);
+                throw error;
+            }
+        }
+        
+        // 定时器按钮事件
+        document.getElementById('timerBtn').addEventListener('click', async function() {
+            const resultElement = document.getElementById('timerResult');
+            resultElement.innerHTML = '<div class="loading"></div> 执行异步操作中...';
+            
+            try {
+                const result = await getSomething();
+                resultElement.innerHTML = `✅ ${result}`;
+                console.log('Async function finished successfully with result:', result);
+            } catch (error) {
+                resultElement.innerHTML = `<div class="error">❌ ${error.message}</div>`;
+                console.error('异步操作出错:', error);
+            }
+        });
+        
+        // GitHub按钮事件
+        document.getElementById('githubBtn').addEventListener('click', function() {
+            fetchRepoData('yangjh-xbmu', 'Web-develop');
+        });
+        
+        // Vue按钮事件
+        document.getElementById('vueBtn').addEventListener('click', function() {
+            fetchRepoData('vuejs', 'vue');
+        });
+        
+        // 获取仓库数据的公共函数
+        async function fetchRepoData(owner, repo) {
+            const resultElement = document.getElementById('githubResult');
+            
+            try {
+                const repoData = await getLastPushedDate(owner, repo);
+                
+                // 格式化日期
+                const pushedDate = new Date(repoData.pushed_at);
+                const formattedDate = pushedDate.toLocaleString('zh-CN', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                resultElement.innerHTML = `
+                    <div>
+                        <h3><a href="${repoData.html_url}" target="_blank">${repoData.full_name}</a></h3>
+                        <p>${repoData.description}</p>
+                        <p>⭐ 星标数: ${repoData.stargazers_count.toLocaleString()}</p>
+                        <p>⑂ 分支数: ${repoData.forks_count.toLocaleString()}</p>
+                        <p class="success">最后推送时间: ${formattedDate}</p>
+                    </div>
+                `;
+                
+                console.log(`获取 ${owner}/${repo} 数据成功:`, repoData);
+            } catch (error) {
+                resultElement.innerHTML = `
+                    <div class="error">
+                        <h3>获取 ${owner}/${repo} 数据失败</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+                console.error(`获取 ${owner}/${repo} 数据失败:`, error);
+            }
+        }
+        
+        // 初始控制台输出
+        console.log('页面已加载，等待用户操作...');
+        console.log('2222222 - 同步操作立即执行');
+    </script>
+</body>
+</html>

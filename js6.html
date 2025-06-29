@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 核心语法学习一</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .panel:hover {
+            transform: translateY(-5px);
+        }
+        
+        .panel-title {
+            color: #1a2a6c;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #fdbb2d;
+            display: flex;
+            align-items: center;
+        }
+        
+        .panel-title i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+            color: #b21f1f;
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 16px;
+            margin: 15px 0;
+            overflow-x: auto;
+            line-height: 1.5;
+            position: relative;
+        }
+        
+        .code-comment {
+            color: #75715e;
+        }
+        
+        .code-keyword {
+            color: #f92672;
+        }
+        
+        .code-function {
+            color: #66d9ef;
+        }
+        
+        .code-string {
+            color: #e6db74;
+        }
+        
+        .code-number {
+            color: #ae81ff;
+        }
+        
+        .run-btn {
+            background: #fdbb2d;
+            color: #1a2a6c;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 15px auto;
+            font-size: 16px;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+        }
+        
+        .run-btn:hover {
+            background: #ffa500;
+            transform: scale(1.05);
+        }
+        
+        .output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 150px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 16px;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        
+        .output-title {
+            color: #1a2a6c;
+            margin-bottom: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .explanation {
+            background: #e9f7fe;
+            border-left: 4px solid #1a2a6c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight {
+            background: #fff9c4;
+            padding: 0 3px;
+            border-radius: 3px;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+        
+        .tip-box {
+            background: #fffde7;
+            border: 1px dashed #ffd54f;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .tip-title {
+            color: #b21f1f;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JavaScript 核心语法学习</h1>
+            <p class="subtitle">掌握变量、数据类型、运算符、控制结构和函数等基础知识</p>
+        </header>
+        
+        <div class="content">
+            <div class="panel">
+                <h2 class="panel-title"><i class="fas fa-code"></i> 变量与数据类型</h2>
+                
+                <div class="code-block">
+<span class="code-comment">// 变量声明</span>
+<span class="code-keyword">let</span> a = <span class="code-number">100</span>;
+<span class="code-keyword">const</span> api_key = <span class="code-string">'ssssx-=-dddd'</span>;
+
+<span class="code-comment">// 类型检测</span>
+console.<span class="code-function">log</span>(<span class="code-keyword">typeof</span> a);         <span class="code-comment">// "number"</span>
+console.<span class="code-function">log</span>(<span class="code-keyword">typeof</span> api_key);  <span class="code-comment">// "string"</span>
+console.<span class="code-function">log</span>(<span class="code-keyword">typeof</span> <span class="code-keyword">true</span>);      <span class="code-comment">// "boolean"</span>
+
+<span class="code-comment">// 类型转换</span>
+<span class="code-keyword">let</span> b = <span class="code-string">'1'</span>;
+console.<span class="code-function">log</span>(a + b);            <span class="code-comment">// "1001" (字符串拼接)</span>
+console.<span class="code-function">log</span>(a + <span class="code-function">Number</span>(b));    <span class="code-comment">// 101 (数值相加)</span>
+
+<span class="code-comment">// 相等性比较</span>
+<span class="code-keyword">let</span> c = <span class="code-string">'100'</span>;
+console.<span class="code-function">log</span>(a == c);   <span class="code-comment">// true (值相等)</span>
+console.<span class="code-function">log</span>(a === c);  <span class="code-comment">// false (类型不同)</span>
+                </div>
+                
+                <button class="run-btn" onclick="runVariables()">执行代码</button>
+                
+                <div class="output-title"><i class="fas fa-terminal"></i> 控制台输出</div>
+                <div class="output" id="variables-output">点击执行查看输出结果</div>
+                
+                <div class="explanation">
+                    <p><span class="highlight">let</span> 用于声明可重新赋值的变量，<span class="highlight">const</span> 用于声明常量（不可重新赋值）。</p>
+                    <p><span class="highlight">typeof</span> 操作符返回一个字符串，表示未经计算的操作数的类型。</p>
+                    <p>JavaScript 是弱类型语言，会进行<span class="highlight">隐式类型转换</span>（如数值和字符串相加）。</p>
+                    <p>使用 <span class="highlight">===</span> 严格相等运算符可以同时比较值和类型。</p>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2 class="panel-title"><i class="fas fa-sync-alt"></i> 控制结构</h2>
+                
+                <div class="code-block">
+<span class="code-comment">// 分支语句</span>
+<span class="code-keyword">let</span> current_time = <span class="code-string">'12:20'</span>;
+<span class="code-keyword">if</span> (current_time == <span class="code-string">'12:20'</span>) {
+    console.<span class="code-function">log</span>(<span class="code-string">'冲啊！吃午饭时间到了！'</span>);
+} <span class="code-keyword">else</span> {
+    console.<span class="code-function">log</span>(<span class="code-string">'假装学习……'</span>);
+}
+
+<span class="code-comment">// for循环</span>
+<span class="code-keyword">for</span> (<span class="code-keyword">let</span> i = <span class="code-number">1</span>; i <= <span class="code-number">5</span>; i++) {
+    console.<span class="code-function">log</span>(<span class="code-string">'for循环计数: '</span> + i);
+}
+
+<span class="code-comment">// while循环</span>
+<span class="code-keyword">let</span> hug = <span class="code-number">60</span>;
+<span class="code-keyword">while</span> (hug > <span class="code-number">0</span>) {
+    console.<span class="code-function">log</span>(<span class="code-string">'继续干饭... 饥饿值: '</span> + hug);
+    hug -= <span class="code-number">10</span>;
+}
+                </div>
+                
+                <button class="run-btn" onclick="runControlStructures()">执行代码</button>
+                
+                <div class="output-title"><i class="fas fa-terminal"></i> 控制台输出</div>
+                <div class="output" id="control-output">点击执行查看输出结果</div>
+                
+                <div class="explanation">
+                    <p><span class="highlight">if/else</span> 语句根据条件执行不同的代码块。</p>
+                    <p><span class="highlight">for</span> 循环在已知循环次数时使用，包含初始化、条件判断和迭代器。</p>
+                    <p><span class="highlight">while</span> 循环在满足条件时重复执行代码块，适用于不确定循环次数的情况。</p>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2 class="panel-title"><i class="fas fa-cogs"></i> 函数基础</h2>
+                
+                <div class="code-block">
+<span class="code-comment">// 无参数函数</span>
+<span class="code-keyword">function</span> <span class="code-function">intro</span>() {
+    console.<span class="code-function">log</span>(<span class="code-string">'你好，我是一个脚本！'</span>);
+}
+<span class="code-function">intro</span>();
+
+<span class="code-comment">// 带参数函数</span>
+<span class="code-keyword">function</span> <span class="code-function">intro2</span>(content) {
+    console.<span class="code-function">log</span>(<span class="code-string">'以下是我介绍的内容: '</span> + <span class="code-function">String</span>(content));
+}
+<span class="code-function">intro2</span>(<span class="code-string">'这是传入的参数'</span>);
+
+<span class="code-comment">// 多参数函数</span>
+<span class="code-keyword">function</span> <span class="code-function">intro3</span>(content1, content2) {
+    console.<span class="code-function">log</span>(<span class="code-string">'多参数内容: '</span> + <span class="code-function">String</span>(content1) + <span class="code-function">String</span>(content2));
+}
+<span class="code-function">intro3</span>(<span class="code-string">'参数1'</span>, <span class="code-string">'参数2'</span>, <span class="code-number">444</span>); <span class="code-comment">// 多余参数会被忽略</span>
+
+<span class="code-comment">// 带返回值的函数</span>
+<span class="code-keyword">function</span> <span class="code-function">intro4</span>(content) {
+    console.<span class="code-function">log</span>(content);
+    <span class="code-keyword">return</span> content + <span class="code-string">'这是返回值'</span>;
+}
+<span class="code-keyword">let</span> result = <span class="code-function">intro4</span>(<span class="code-string">'带返回值的函数'</span>);
+console.<span class="code-function">log</span>(result);
+                </div>
+                
+                <button class="run-btn" onclick="runFunctions()">执行代码</button>
+                
+                <div class="output-title"><i class="fas fa-terminal"></i> 控制台输出</div>
+                <div class="output" id="functions-output">点击执行查看输出结果</div>
+                
+                <div class="explanation">
+                    <p>函数是执行特定任务的<span class="highlight">可重用代码块</span>。</p>
+                    <p>函数可以接受<span class="highlight">参数</span>（输入）并返回<span class="highlight">值</span>（输出）。</p>
+                    <p>使用 <span class="highlight">function</span> 关键字定义函数，通过函数名加括号调用。</p>
+                    <p><span class="highlight">return</span> 语句指定函数的返回值（没有return时返回undefined）。</p>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2 class="panel-title"><i class="fas fa-lightbulb"></i> JavaScript 学习要点</h2>
+                
+                <div class="tip-box">
+                    <div class="tip-title"><i class="fas fa-exclamation-circle"></i> 变量声明</div>
+                    <p>使用 <code>let</code> 和 <code>const</code> 代替过时的 <code>var</code>。<code>const</code> 用于声明常量，<code>let</code> 用于声明可重新赋值的变量。</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title"><i class="fas fa-balance-scale"></i> 相等性比较</div>
+                    <p>优先使用严格相等 <code>===</code> 和严格不等 <code>!==</code>，避免类型转换导致的意外结果。</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title"><i class="fas fa-function"></i> 函数设计</div>
+                    <p>遵循单一职责原则，每个函数只做一件事。合理使用参数和返回值，避免函数副作用。</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title"><i class="fas fa-code"></i> 代码风格</div>
+                    <p>使用一致的缩进（通常2或4个空格），在操作符周围添加空格，使用驼峰命名法，添加有意义的注释。</p>
+                </div>
+                
+                <div class="tip-box">
+                    <div class="tip-title"><i class="fas fa-bug"></i> 调试技巧</div>
+                    <p>善用 <code>console.log()</code> 输出调试信息，使用浏览器开发者工具设置断点和检查变量值。</p>
+                </div>
+                
+                <div class="explanation">
+                    <p>JavaScript 是<span class="highlight">动态类型</span>语言，变量类型在运行时确定。</p>
+                    <p>JavaScript 使用<span class="highlight">原型继承</span>而非类继承（ES6类语法是语法糖）。</p>
+                    <p>理解<span class="highlight">作用域</span>和<span class="highlight">闭包</span>是掌握JavaScript的关键。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>JavaScript 核心语法学习一 | 通过实践掌握编程基础</p>
+            <p>打开浏览器控制台（F12）查看详细输出结果</p>
+        </div>
+    </div>
+    
+    <script>
+        // 执行变量与数据类型部分的代码
+        function runVariables() {
+            let output = "";
+            const originalLog = console.log;
+            console.log = function(message) {
+                output += message + "\n";
+                originalLog.apply(console, arguments);
+            };
+            
+            try {
+                // 变量声明
+                let a = 100;
+                const api_key = 'ssssx-=-dddd';
+                
+                // 类型检测
+                console.log("变量 a 的类型: " + typeof a);
+                console.log("变量 api_key 的类型: " + typeof api_key);
+                console.log("true 的类型: " + typeof true);
+                
+                // 类型转换
+                let b = '1';
+                console.log("a + b 的结果: " + (a + b));
+                console.log("a + Number(b) 的结果: " + (a + Number(b)));
+                
+                // 相等性比较
+                let c = '100';
+                console.log("a == c 的结果: " + (a == c));
+                console.log("a === c 的结果: " + (a === c));
+                
+                document.getElementById("variables-output").textContent = output;
+            } catch (error) {
+                document.getElementById("variables-output").textContent = "错误: " + error.message;
+            } finally {
+                console.log = originalLog;
+            }
+        }
+        
+        // 执行控制结构部分的代码
+        function runControlStructures() {
+            let output = "";
+            const originalLog = console.log;
+            console.log = function(message) {
+                output += message + "\n";
+                originalLog.apply(console, arguments);
+            };
+            
+            try {
+                // 分支语句
+                let current_time = '12:20';
+                if (current_time == '12:20') {
+                    console.log('冲啊！吃午饭时间到了！');
+                } else {
+                    console.log('假装学习……');
+                }
+                
+                // for循环
+                for (let i = 1; i <= 5; i++) {
+                    console.log('for循环计数: ' + i);
+                }
+                
+                // while循环
+                let hug = 60;
+                while (hug > 0) {
+                    console.log('继续干饭... 饥饿值: ' + hug);
+                    hug -= 10;
+                }
+                
+                document.getElementById("control-output").textContent = output;
+            } catch (error) {
+                document.getElementById("control-output").textContent = "错误: " + error.message;
+            } finally {
+                console.log = originalLog;
+            }
+        }
+        
+        // 执行函数部分的代码
+        function runFunctions() {
+            let output = "";
+            const originalLog = console.log;
+            console.log = function(message) {
+                output += message + "\n";
+                originalLog.apply(console, arguments);
+            };
+            
+            try {
+                // 无参数函数
+                function intro() {
+                    console.log('你好，我是一个脚本！');
+                }
+                intro();
+                
+                // 带参数函数
+                function intro2(content) {
+                    console.log('以下是我介绍的内容: ' + String(content));
+                }
+                intro2('这是传入的参数');
+                
+                // 多参数函数
+                function intro3(content1, content2) {
+                    console.log('多参数内容: ' + String(content1) + String(content2));
+                }
+                intro3('参数1', '参数2', 444); // 多余参数会被忽略
+                
+                // 带返回值的函数
+                function intro4(content) {
+                    console.log(content);
+                    return content + '这是返回值';
+                }
+                let result = intro4('带返回值的函数');
+                console.log(result);
+                
+                document.getElementById("functions-output").textContent = output;
+            } catch (error) {
+                document.getElementById("functions-output").textContent = "错误: " + error.message;
+            } finally {
+                console.log = originalLog;
+            }
+        }
+        
+        // 页面加载时运行示例代码
+        window.onload = function() {
+            runVariables();
+            runControlStructures();
+            runFunctions();
+        };
+    </script>
+</body>
+</html>

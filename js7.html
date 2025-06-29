@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 语法练习2 - 完善版</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4a69bd;
+        }
+        
+        h1 {
+            color: #1a2a6c;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #b21f1f;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .section {
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-title {
+            color: #1a2a6c;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4a69bd;
+            font-size: 1.5rem;
+        }
+        
+        .code-block {
+            background-color: #2d3436;
+            color: #dfe6e9;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        .output {
+            background-color: #fff;
+            border: 2px solid #4a69bd;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 150px;
+            margin: 15px 0;
+        }
+        
+        .output-title {
+            color: #b21f1f;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .console {
+            background-color: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            height: 200px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+        
+        .console-line {
+            margin-bottom: 5px;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #1a2a6c, #4a69bd);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to right, #4a69bd, #1a2a6c);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-green {
+            background: linear-gradient(to right, #00b09b, #96c93d);
+        }
+        
+        .btn-red {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+        }
+        
+        .demo-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: #f1f2f6;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .demo-element {
+            width: 100%;
+            padding: 15px;
+            background-color: #4a69bd;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-element:hover {
+            background-color: #1a2a6c;
+            transform: scale(1.02);
+        }
+        
+        .student-card {
+            background-color: #fff;
+            border: 2px solid #4a69bd;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .student-card h3 {
+            color: #1a2a6c;
+            margin-bottom: 10px;
+        }
+        
+        .callback-visual {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 150px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .callback-step {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(to bottom right, #4a69bd, #1a2a6c);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .callback-line {
+            position: absolute;
+            height: 4px;
+            background: #4a69bd;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .active-step {
+            background: linear-gradient(to bottom right, #ff416c, #ff4b2b);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 65, 108, 0.7);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #1a2a6c;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JavaScript 语法练习2</h1>
+            <p class="subtitle">面向对象编程、DOM操作与异步回调</p>
+        </header>
+        
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">类和对象</h2>
+                
+                <div class="code-block">
+                    <pre>// 定义Student类
+class Student {
+    constructor(name, age, school, grade) {
+        this.name = name;
+        this.age = age;
+        this.school = school;
+        this.grade = grade;
+    }
+    
+    learn(subject = "语文") {
+        return `${this.name}正在学习${subject}，真棒！`;
+    }
+    
+    exam() {
+        return `${this.name}正在考试`;
+    }
+}
+
+// 定义Undergraduate类继承Student
+class Undergraduate extends Student {
+    constructor(name, age, school, grade, major, experience) {
+        super(name, age, school, grade);
+        this.major = major;
+        this.experience = experience;
+    }
+    
+    intern(corp) {
+        return `${this.name}在${corp}实习，获得经验值1000`;
+    }
+}</pre>
+                </div>
+                
+                <div class="output">
+                    <div class="output-title">学生对象操作</div>
+                    <div id="studentOutput" class="student-card">
+                        <h3>学生信息将显示在这里</h3>
+                    </div>
+                    <button class="btn" id="createStudentBtn">创建学生</button>
+                    <button class="btn btn-green" id="callLearnBtn">调用learn方法</button>
+                    <button class="btn btn-red" id="callExamBtn">调用exam方法</button>
+                </div>
+                
+                <div class="output">
+                    <div class="output-title">大学生对象操作</div>
+                    <div id="undergradOutput" class="student-card">
+                        <h3>大学生信息将显示在这里</h3>
+                    </div>
+                    <button class="btn" id="createUndergradBtn">创建大学生</button>
+                    <button class="btn btn-green" id="callInternBtn">调用intern方法</button>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">DOM操作</h2>
+                
+                <div class="demo-box">
+                    <div id="demo" class="demo-element">
+                        这是一个标题的原始内容 - 点击试试
+                    </div>
+                    
+                    <div class="demo-element" id="anotherp">
+                        这是一个段落 - 点击试试
+                    </div>
+                    
+                    <div class="demo-element" id="newElement">
+                        动态创建的元素
+                    </div>
+                    
+                    <button class="btn" id="changeContentBtn">修改标题内容</button>
+                    <button class="btn btn-green" id="changeStyleBtn">修改标题样式</button>
+                    <button class="btn btn-red" id="createElementBtn">创建新元素</button>
+                </div>
+                
+                <div class="code-block">
+                    <pre>// DOM操作示例代码
+let myh1 = document.getElementById("demo");
+myh1.innerHTML = "这是来自脚本的动态内容";
+myh1.style.color = "#888";
+myh1.style.backgroundColor = "#f1f2f6";
+
+let myp = document.getElementById("anotherp");
+myp.onclick = function() {
+    alert("你好啊！");
+};
+
+// 创建新元素
+let newDiv = document.createElement("div");
+newDiv.textContent = "这是动态创建的元素";
+newDiv.className = "demo-element";
+document.querySelector(".demo-box").appendChild(newDiv);</pre>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">回调函数与异步</h2>
+                
+                <div class="callback-visual">
+                    <div class="callback-step" id="step1">1</div>
+                    <div class="callback-step" id="step2">2</div>
+                    <div class="callback-step" id="step3">3</div>
+                    <div class="callback-line" style="width: 80%; left: 10%;"></div>
+                </div>
+                
+                <div class="output">
+                    <div class="output-title">控制台输出</div>
+                    <div class="console" id="consoleOutput">
+                        <div class="console-line">控制台输出将显示在这里...</div>
+                    </div>
+                    <button class="btn" id="runCallbackBtn">执行回调示例</button>
+                    <button class="btn btn-green" id="clearConsoleBtn">清空控制台</button>
+                </div>
+                
+                <div class="code-block">
+                    <pre>// 回调函数示例
+console.log("111111");
+
+setTimeout(function() {
+    console.log("222222 (1秒后输出)");
+}, 1000);
+
+console.log("333333");
+
+// 使用Promise处理异步
+function asyncTask() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve("异步操作完成！");
+        }, 1500);
+    });
+}
+
+asyncTask().then(result => {
+    console.log(result);
+});</pre>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">事件处理</h2>
+                
+                <div class="output">
+                    <div class="output-title">事件监听</div>
+                    <div class="demo-box">
+                        <button class="btn" id="eventBtn">点击我</button>
+                        <div id="eventOutput" style="margin-top: 15px; padding: 10px; background: #f1f2f6; border-radius: 8px; min-height: 50px;">
+                            事件信息将显示在这里
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="code-block">
+                    <pre>// 事件处理示例
+document.getElementById("eventBtn").addEventListener("click", function() {
+    let output = document.getElementById("eventOutput");
+    output.innerHTML = "按钮被点击了！";
+    
+    // 改变按钮样式
+    this.style.transform = "scale(0.95)";
+    setTimeout(() => {
+        this.style.transform = "scale(1)";
+    }, 200);
+});
+
+// 鼠标事件
+let eventBox = document.getElementById("eventOutput");
+eventBox.addEventListener("mouseenter", function() {
+    this.style.backgroundColor = "#4a69bd";
+    this.style.color = "white";
+});
+
+eventBox.addEventListener("mouseleave", function() {
+    this.style.backgroundColor = "#f1f2f6";
+    this.style.color = "#333";
+});</pre>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>JavaScript语法练习 - 面向对象编程与DOM操作 | 完善版</p>
+        </div>
+    </div>
+
+    <script>
+        // 控制台输出函数
+        function logToConsole(message) {
+            const consoleOutput = document.getElementById('consoleOutput');
+            const line = document.createElement('div');
+            line.className = 'console-line';
+            line.textContent = message;
+            consoleOutput.appendChild(line);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        // 类和对象示例
+        class Student {
+            constructor(name, age, school, grade) {
+                this.name = name;
+                this.age = age;
+                this.school = school;
+                this.grade = grade;
+            }
+            
+            learn(subject = "语文") {
+                return `${this.name}正在学习${subject}，真棒！`;
+            }
+            
+            exam() {
+                return `${this.name}正在考试`;
+            }
+        }
+        
+        class Undergraduate extends Student {
+            constructor(name, age, school, grade, major, experience) {
+                super(name, age, school, grade);
+                this.major = major;
+                this.experience = experience;
+            }
+            
+            intern(corp) {
+                return `${this.name}在${corp}实习，获得经验值1000`;
+            }
+        }
+        
+        // 创建学生对象
+        let xiaoming = null;
+        let xiaoming2 = null;
+        
+        document.getElementById('createStudentBtn').addEventListener('click', function() {
+            xiaoming = new Student("小明", 7, "实验小学", 1);
+            const output = document.getElementById('studentOutput');
+            output.innerHTML = `
+                <h3>${xiaoming.name} - 学生</h3>
+                <p>年龄: ${xiaoming.age}岁</p>
+                <p>学校: ${xiaoming.school}</p>
+                <p>年级: ${xiaoming.grade}年级</p>
+            `;
+            logToConsole('创建了学生对象: 小明');
+        });
+        
+        document.getElementById('callLearnBtn').addEventListener('click', function() {
+            if (xiaoming) {
+                const result = xiaoming.learn("英语");
+                logToConsole(result);
+                document.getElementById('studentOutput').innerHTML += `<p>${result}</p>`;
+            } else {
+                logToConsole('请先创建学生对象');
+            }
+        });
+        
+        document.getElementById('callExamBtn').addEventListener('click', function() {
+            if (xiaoming) {
+                const result = xiaoming.exam();
+                logToConsole(result);
+                document.getElementById('studentOutput').innerHTML += `<p>${result}</p>`;
+            } else {
+                logToConsole('请先创建学生对象');
+            }
+        });
+        
+        document.getElementById('createUndergradBtn').addEventListener('click', function() {
+            xiaoming2 = new Undergraduate("小明", 17, "科技大学", 1, "新闻学", 0);
+            const output = document.getElementById('undergradOutput');
+            output.innerHTML = `
+                <h3>${xiaoming2.name} - 大学生</h3>
+                <p>年龄: ${xiaoming2.age}岁</p>
+                <p>学校: ${xiaoming2.school}</p>
+                <p>年级: ${xiaoming2.grade}年级</p>
+                <p>专业: ${xiaoming2.major}</p>
+                <p>经验值: ${xiaoming2.experience}</p>
+            `;
+            logToConsole('创建了大学生对象: 小明');
+        });
+        
+        document.getElementById('callInternBtn').addEventListener('click', function() {
+            if (xiaoming2) {
+                const result = xiaoming2.intern("腾讯");
+                logToConsole(result);
+                document.getElementById('undergradOutput').innerHTML += `<p>${result}</p>`;
+                xiaoming2.experience += 1000;
+                document.getElementById('undergradOutput').innerHTML += `<p>当前经验值: ${xiaoming2.experience}</p>`;
+            } else {
+                logToConsole('请先创建大学生对象');
+            }
+        });
+        
+        // DOM操作
+        document.getElementById('changeContentBtn').addEventListener('click', function() {
+            const myh1 = document.getElementById('demo');
+            myh1.innerHTML = "这是来自脚本的动态内容";
+            myh1.style.backgroundColor = "#f1f2f6";
+            logToConsole('修改了标题内容');
+        });
+        
+        document.getElementById('changeStyleBtn').addEventListener('click', function() {
+            const myh1 = document.getElementById('demo');
+            myh1.style.color = "#fff";
+            myh1.style.backgroundColor = "#4a69bd";
+            myh1.style.fontWeight = "bold";
+            myh1.style.fontSize = "1.5rem";
+            logToConsole('修改了标题样式');
+        });
+        
+        document.getElementById('createElementBtn').addEventListener('click', function() {
+            const demoBox = document.querySelector('.demo-box');
+            const newElement = document.createElement('div');
+            newElement.className = 'demo-element';
+            newElement.textContent = `新元素 ${document.querySelectorAll('.demo-element').length}`;
+            newElement.onclick = function() {
+                this.style.backgroundColor = "#ff9ff3";
+                logToConsole(`点击了动态创建的元素: ${this.textContent}`);
+            };
+            demoBox.appendChild(newElement);
+            logToConsole('创建了新元素');
+        });
+        
+        // 初始的DOM元素事件
+        document.getElementById('demo').onclick = function() {
+            alert('你点我干啥！');
+            logToConsole('点击了标题元素');
+        };
+        
+        document.getElementById('anotherp').onclick = function() {
+            alert('你好啊！');
+            logToConsole('点击了段落元素');
+        };
+        
+        // 回调函数与异步
+        document.getElementById('runCallbackBtn').addEventListener('click', function() {
+            logToConsole('111111');
+            
+            // 更新步骤UI
+            document.getElementById('step1').classList.add('active-step');
+            
+            setTimeout(function() {
+                document.getElementById('step2').classList.add('active-step');
+                logToConsole('222222 (1秒后输出)');
+            }, 1000);
+            
+            setTimeout(function() {
+                document.getElementById('step3').classList.add('active-step');
+                logToConsole('333333 (立即输出)');
+            }, 10);
+            
+            // Promise示例
+            function asyncTask() {
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve("异步操作完成！");
+                    }, 1500);
+                });
+            }
+            
+            asyncTask().then(result => {
+                logToConsole(result);
+                document.querySelector('.callback-visual').style.backgroundColor = "rgba(0, 180, 155, 0.2)";
+                setTimeout(() => {
+                    document.querySelector('.callback-visual').style.backgroundColor = "transparent";
+                }, 1000);
+            });
+        });
+        
+        document.getElementById('clearConsoleBtn').addEventListener('click', function() {
+            document.getElementById('consoleOutput').innerHTML = '<div class="console-line">控制台已清空</div>';
+            // 重置步骤
+            document.querySelectorAll('.callback-step').forEach(step => {
+                step.classList.remove('active-step');
+            });
+        });
+        
+        // 事件处理
+        document.getElementById('eventBtn').addEventListener('click', function() {
+            const output = document.getElementById('eventOutput');
+            output.innerHTML = "按钮被点击了！";
+            output.style.fontWeight = "bold";
+            output.style.color = "#ff6b6b";
+            
+            // 改变按钮样式
+            this.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                this.style.transform = "scale(1)";
+            }, 200);
+            
+            logToConsole('事件按钮被点击');
+        });
+        
+        // 鼠标事件
+        const eventBox = document.getElementById('eventOutput');
+        eventBox.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = "#4a69bd";
+            this.style.color = "white";
+            this.innerHTML += "<p>鼠标进入了区域</p>";
+        });
+        
+        eventBox.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = "#f1f2f6";
+            this.style.color = "#333";
+            this.innerHTML += "<p>鼠标离开了区域</p>";
+        });
+        
+        // 页面加载完成事件
+        window.onload = function() {
+            logToConsole('页面加载完成');
+        };
+    </script>
+</body>
+</html>
