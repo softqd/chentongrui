@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语法练习 - 面向对象与DOM操作</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf9 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+        }
+        
+        .section-title {
+            color: #3498db;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f1f1;
+        }
+        
+        .console {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            min-height: 200px;
+            margin-top: 15px;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+        
+        .console-line {
+            margin-bottom: 8px;
+            padding: 5px;
+            border-bottom: 1px solid #34495e;
+        }
+        
+        .console-line:last-child {
+            border-bottom: none;
+        }
+        
+        .demo-area {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .interactive-area {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .student-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .student-card h3 {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        
+        .student-card p {
+            margin: 5px 0;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn-red {
+            background: #e74c3c;
+        }
+        
+        .btn-red:hover {
+            background: #c0392b;
+        }
+        
+        .btn-green {
+            background: #2ecc71;
+        }
+        
+        .btn-green:hover {
+            background: #27ae60;
+        }
+        
+        .btn-purple {
+            background: #9b59b6;
+        }
+        
+        .btn-purple:hover {
+            background: #8e44ad;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JavaScript 语法练习</h1>
+            <p class="subtitle">面向对象编程与DOM操作实践</p>
+        </header>
+        
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">类和对象</h2>
+                <div class="demo-area">
+                    <p>我们定义了一个 <span class="highlight">Student</span> 类和一个继承自Student的 <span class="highlight">Undergraduate</span> 类。</p>
+                    
+                    <div id="studentDemo" class="student-card">
+                        <h3>学生信息</h3>
+                        <p>姓名: <span id="studentName">-</span></p>
+                        <p>年龄: <span id="studentAge">-</span></p>
+                        <p>学校: <span id="studentSchool">-</span></p>
+                        <p>年级: <span id="studentGrade">-</span></p>
+                        <p>专业: <span id="studentMajor">-</span></p>
+                        <p>经验值: <span id="studentExp">-</span></p>
+                    </div>
+                    
+                    <div class="actions">
+                        <button id="createStudent" class="btn">创建小学生</button>
+                        <button id="createUndergraduate" class="btn btn-purple">创建大学生</button>
+                        <button id="studentLearn" class="btn btn-green">学习课程</button>
+                        <button id="studentExam" class="btn">参加考试</button>
+                        <button id="studentIntern" class="btn">企业实习</button>
+                    </div>
+                </div>
+                
+                <div class="interactive-area">
+                    <h3>创建自定义学生</h3>
+                    <div class="form-group">
+                        <label for="customName">姓名:</label>
+                        <input type="text" id="customName" placeholder="输入姓名">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customAge">年龄:</label>
+                        <input type="number" id="customAge" placeholder="输入年龄">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customSchool">学校:</label>
+                        <input type="text" id="customSchool" placeholder="输入学校">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customGrade">年级:</label>
+                        <input type="number" id="customGrade" placeholder="输入年级">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customMajor">专业 (大学生):</label>
+                        <input type="text" id="customMajor" placeholder="输入专业">
+                    </div>
+                    
+                    <div class="actions">
+                        <button id="createCustomStudent" class="btn">创建小学生</button>
+                        <button id="createCustomUndergraduate" class="btn btn-purple">创建大学生</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">DOM操作</h2>
+                <div class="demo-area">
+                    <h3 id="demoTitle">DOM操作演示标题</h3>
+                    <p id="demoText">这是一个演示DOM操作的段落。点击下方按钮查看效果。</p>
+                    <div id="colorBox" style="width: 100%; height: 100px; background-color: #3498db; margin: 15px 0; border-radius: 5px;"></div>
+                    
+                    <div class="actions">
+                        <button id="changeText" class="btn">修改文本</button>
+                        <button id="changeColor" class="btn btn-green">修改颜色</button>
+                        <button id="addElement" class="btn btn-purple">添加元素</button>
+                        <button id="removeElement" class="btn btn-red">删除元素</button>
+                        <button id="toggleStyle" class="btn">切换样式</button>
+                    </div>
+                </div>
+                
+                <div class="interactive-area">
+                    <h3>回调函数和异步操作</h3>
+                    <p>JavaScript中的回调函数常用于异步操作，如定时器、事件处理等。</p>
+                    
+                    <div class="actions">
+                        <button id="setTimeoutDemo" class="btn">setTimeout示例</button>
+                        <button id="setIntervalDemo" class="btn btn-green">setInterval示例</button>
+                        <button id="clearIntervalBtn" class="btn btn-red">停止计时器</button>
+                        <button id="eventDemo" class="btn btn-purple">事件监听示例</button>
+                    </div>
+                    
+                    <div id="callbackOutput" class="console">
+                        <div class="console-line">回调函数输出区域:</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">控制台输出</h2>
+            <div id="consoleOutput" class="console">
+                <div class="console-line">控制台输出区域:</div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>JavaScript 语法练习 | 面向对象编程与DOM操作 | &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script>
+        // 定义一个学生类
+        class Student {
+            constructor(name, age, school, grade) {
+                this.name = name;
+                this.age = age;
+                this.school = school;
+                this.grade = grade;
+            }
+            
+            learn(subject = "语文") {
+                const message = `${this.name}正在学习${subject}，真棒！`;
+                logToConsole(message);
+                return message;
+            }
+            
+            exam() {
+                const message = `${this.name}正在参加${this.grade}年级考试`;
+                logToConsole(message);
+                return message;
+            }
+            
+            introduce() {
+                return `大家好，我叫${this.name}，今年${this.age}岁，就读于${this.school}${this.grade}年级。`;
+            }
+        }
+
+        // 定义大学生类，继承自Student
+        class Undergraduate extends Student {
+            constructor(name, age, school, grade, major, experience = 0) {
+                super(name, age, school, grade);
+                this.major = major;
+                this.experience = experience;
+            }
+            
+            intern(corp) {
+                this.experience += 1000;
+                const message = `${this.name}在${corp}实习，获得经验值1000！当前经验值: ${this.experience}`;
+                logToConsole(message);
+                return message;
+            }
+            
+            exam() {
+                const message = `${this.name}正在参加${this.major}专业的期末考试`;
+                logToConsole(message);
+                return message;
+            }
+            
+            introduce() {
+                return `${super.introduce()} 我的专业是${this.major}，已经有${this.experience}点经验值。`;
+            }
+        }
+
+        // 当前选中的学生对象
+        let currentStudent = null;
+        
+        // DOM元素
+        const studentNameEl = document.getElementById('studentName');
+        const studentAgeEl = document.getElementById('studentAge');
+        const studentSchoolEl = document.getElementById('studentSchool');
+        const studentGradeEl = document.getElementById('studentGrade');
+        const studentMajorEl = document.getElementById('studentMajor');
+        const studentExpEl = document.getElementById('studentExp');
+        
+        // 初始化一些学生对象
+        const xiaoming = new Student("小明", 7, "实验小学", 1);
+        const xiaohong = new Undergraduate("小红", 20, "科技大学", 3, "计算机科学", 500);
+        
+        // 更新学生信息显示
+        function updateStudentDisplay(student) {
+            if (!student) return;
+            
+            studentNameEl.textContent = student.name;
+            studentAgeEl.textContent = student.age;
+            studentSchoolEl.textContent = student.school;
+            studentGradeEl.textContent = student.grade;
+            
+            // 如果是大学生，显示专业和经验值
+            if (student instanceof Undergraduate) {
+                studentMajorEl.textContent = student.major;
+                studentExpEl.textContent = student.experience;
+                studentMajorEl.parentElement.style.display = "block";
+                studentExpEl.parentElement.style.display = "block";
+            } else {
+                studentMajorEl.parentElement.style.display = "none";
+                studentExpEl.parentElement.style.display = "none";
+            }
+            
+            // 显示学生介绍
+            logToConsole(student.introduce());
+        }
+        
+        // 记录到控制台
+        function logToConsole(message) {
+            const consoleOutput = document.getElementById('consoleOutput');
+            const newLine = document.createElement('div');
+            newLine.className = 'console-line';
+            newLine.textContent = "> " + message;
+            consoleOutput.appendChild(newLine);
+            
+            // 滚动到底部
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            
+            // 同时在浏览器控制台输出
+            console.log(message);
+        }
+        
+        // 记录到回调输出区域
+        function logToCallbackOutput(message) {
+            const output = document.getElementById('callbackOutput');
+            const newLine = document.createElement('div');
+            newLine.className = 'console-line';
+            newLine.textContent = "> " + message;
+            output.appendChild(newLine);
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        // 页面加载完成后执行
+        window.onload = function() {
+            logToConsole("页面加载完成！");
+            
+            // 设置默认学生
+            currentStudent = xiaoming;
+            updateStudentDisplay(currentStudent);
+            
+            // 绑定按钮事件
+            document.getElementById('createStudent').addEventListener('click', () => {
+                currentStudent = xiaoming;
+                updateStudentDisplay(currentStudent);
+            });
+            
+            document.getElementById('createUndergraduate').addEventListener('click', () => {
+                currentStudent = xiaohong;
+                updateStudentDisplay(currentStudent);
+            });
+            
+            document.getElementById('studentLearn').addEventListener('click', () => {
+                if (!currentStudent) return;
+                const subjects = ['语文', '数学', '英语', '物理', '化学', '生物', '历史'];
+                const subject = subjects[Math.floor(Math.random() * subjects.length)];
+                currentStudent.learn(subject);
+            });
+            
+            document.getElementById('studentExam').addEventListener('click', () => {
+                if (currentStudent) currentStudent.exam();
+            });
+            
+            document.getElementById('studentIntern').addEventListener('click', () => {
+                if (currentStudent instanceof Undergraduate) {
+                    const companies = ['腾讯', '阿里巴巴', '百度', '华为', '字节跳动'];
+                    const company = companies[Math.floor(Math.random() * companies.length)];
+                    currentStudent.intern(company);
+                    updateStudentDisplay(currentStudent);
+                } else {
+                    logToConsole(`${currentStudent.name}还是小学生，不能实习！`);
+                }
+            });
+            
+            // 创建自定义学生
+            document.getElementById('createCustomStudent').addEventListener('click', () => {
+                const name = document.getElementById('customName').value || '匿名';
+                const age = parseInt(document.getElementById('customAge').value) || 7;
+                const school = document.getElementById('customSchool').value || '某小学';
+                const grade = parseInt(document.getElementById('customGrade').value) || 1;
+                
+                currentStudent = new Student(name, age, school, grade);
+                updateStudentDisplay(currentStudent);
+            });
+            
+            document.getElementById('createCustomUndergraduate').addEventListener('click', () => {
+                const name = document.getElementById('customName').value || '匿名';
+                const age = parseInt(document.getElementById('customAge').value) || 18;
+                const school = document.getElementById('customSchool').value || '某大学';
+                const grade = parseInt(document.getElementById('customGrade').value) || 1;
+                const major = document.getElementById('customMajor').value || '未定专业';
+                
+                currentStudent = new Undergraduate(name, age, school, grade, major);
+                updateStudentDisplay(currentStudent);
+            });
+            
+            // DOM操作部分
+            document.getElementById('changeText').addEventListener('click', () => {
+                const title = document.getElementById('demoTitle');
+                const text = document.getElementById('demoText');
+                
+                title.textContent = "标题已被修改!";
+                text.innerHTML = "段落内容已被更新！<strong>DOM操作成功！</strong>";
+                text.style.color = "#e74c3c";
+                
+                logToConsole("修改了标题和段落文本");
+            });
+            
+            document.getElementById('changeColor').addEventListener('click', () => {
+                const colorBox = document.getElementById('colorBox');
+                const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                colorBox.style.backgroundColor = randomColor;
+                logToConsole(`颜色框颜色更改为: ${randomColor}`);
+            });
+            
+            document.getElementById('addElement').addEventListener('click', () => {
+                const demoArea = document.querySelector('.demo-area');
+                const newElement = document.createElement('p');
+                newElement.textContent = `新添加的元素 ${new Date().toLocaleTimeString()}`;
+                newElement.className = 'new-element';
+                demoArea.appendChild(newElement);
+                logToConsole("添加了一个新元素");
+            });
+            
+            document.getElementById('removeElement').addEventListener('click', () => {
+                const elements = document.querySelectorAll('.new-element');
+                if (elements.length > 0) {
+                    elements[elements.length - 1].remove();
+                    logToConsole("移除了一个新添加的元素");
+                } else {
+                    logToConsole("没有可移除的元素");
+                }
+            });
+            
+            document.getElementById('toggleStyle').addEventListener('click', () => {
+                const title = document.getElementById('demoTitle');
+                title.classList.toggle('highlight');
+                
+                if (title.classList.contains('highlight')) {
+                    logToConsole("标题添加了高亮样式");
+                } else {
+                    logToConsole("标题移除了高亮样式");
+                }
+            });
+            
+            // 回调函数和异步操作
+            let intervalId = null;
+            
+            document.getElementById('setTimeoutDemo').addEventListener('click', () => {
+                logToCallbackOutput("开始setTimeout演示...");
+                logToCallbackOutput("第一步: 111111");
+                
+                setTimeout(() => {
+                    logToCallbackOutput("第三步: 222222 (在1秒后执行)");
+                }, 1000);
+                
+                logToCallbackOutput("第二步: 333333");
+            });
+            
+            document.getElementById('setIntervalDemo').addEventListener('click', () => {
+                if (intervalId) {
+                    logToCallbackOutput("计时器已经在运行中...");
+                    return;
+                }
+                
+                logToCallbackOutput("开始setInterval演示...");
+                let counter = 1;
+                intervalId = setInterval(() => {
+                    logToCallbackOutput(`计时器: ${counter}秒 (每1秒执行一次)`);
+                    counter++;
+                }, 1000);
+            });
+            
+            document.getElementById('clearIntervalBtn').addEventListener('click', () => {
+                if (intervalId) {
+                    clearInterval(intervalId);
+                    intervalId = null;
+                    logToCallbackOutput("计时器已停止");
+                } else {
+                    logToCallbackOutput("没有运行中的计时器");
+                }
+            });
+            
+            document.getElementById('eventDemo').addEventListener('click', () => {
+                const eventBox = document.createElement('div');
+                eventBox.style.padding = '15px';
+                eventBox.style.margin = '15px 0';
+                eventBox.style.backgroundColor = '#f1c40f';
+                eventBox.style.borderRadius = '5px';
+                eventBox.style.cursor = 'pointer';
+                eventBox.textContent = '点击我试试！点我越多我越绿...';
+                
+                let clickCount = 0;
+                
+                eventBox.addEventListener('click', function() {
+                    clickCount++;
+                    this.textContent = `你点击了 ${clickCount} 次`;
+                    
+                    // 随着点击次数变绿
+                    const greenValue = Math.min(150, clickCount * 30);
+                    this.style.backgroundColor = `rgb(150, ${200 + greenValue}, 100)`;
+                });
+                
+                const callbackOutput = document.getElementById('callbackOutput');
+                callbackOutput.appendChild(eventBox);
+                logToCallbackOutput("已添加一个事件监听演示元素");
+            });
+        };
+    </script>
+</body>
+</html>
