@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P231014894陈彤蕊CSS课程展示 - 集成AI助手</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 原有样式保持不变 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ffd1dc, #ffffff);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #5a3e51;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff6b9d, #ff8eb4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #7a5a6b;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(255, 120, 170, 0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            min-height: 250px;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #ffafcc, #ffc8dd);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(255, 120, 170, 0.25);
+        }
+        
+        .card.css-card {
+            background: rgba(255, 255, 255, 0.85);
+        }
+        
+        .card.web-card {
+            background: rgba(255, 240, 245, 0.85);
+        }
+        
+        .card.special-card {
+            background: rgba(255, 230, 240, 0.9);
+        }
+        
+        .card-number {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: rgba(255, 120, 170, 0.15);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff6b9d;
+        }
+        
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ff6b9d;
+        }
+        
+        .card p {
+            color: #7a5a6b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        
+        .card-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #ffafcc, #ffc8dd);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            align-self: flex-start;
+        }
+        
+        .card-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 120, 170, 0.3);
+        }
+        
+        .nested-demo {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .nested-item {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            color: #7a5a6b;
+            padding: 20px;
+            font-size: 1rem;
+        }
+        
+        /* 模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow: auto;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            background: linear-gradient(90deg, #ffafcc, #ffc8dd);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .close-modal:hover {
+            transform: scale(1.2);
+        }
+        
+        .modal-body {
+            padding: 25px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        /* 嵌入的CSS练习页面样式 */
+        .css-exercise {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        .css-exercise h1 {
+            font-size: 2.2rem;
+            color: darkblue;
+            text-shadow: none;
+            background: none;
+            -webkit-background-clip: initial;
+            background-clip: initial;
+            color: darkblue;
+            margin-bottom: 20px;
+        }
+        
+        .css-exercise h2 {
+            color: darkgreen;
+            margin: 25px 0 15px;
+            font-size: 1.6rem;
+        }
+        
+        .css-exercise p {
+            text-indent: 2em;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .css-exercise .abstract {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .css-exercise a {
+            color: rgb(87, 87, 197);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .css-exercise a:visited {
+            color: darkgrey;
+        }
+        
+        .css-exercise a:hover {
+            text-decoration: underline;
+            color: #ff6b9d;
+        }
+        
+        /* CSS练习2的样式 */
+        .css-exercise-2 h1 {
+            color: darkblue;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .css-exercise-2 h2 {
+            font-family: "cooper", "楷体", sans-serif;
+            text-decoration: underline;
+            color: chocolate;
+            margin: 20px 0 15px;
+        }
+        
+        .css-exercise-2 ul {
+            margin: 15px 0 15px 30px;
+            list-style-type: square;
+        }
+        
+        .css-exercise-2 li {
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .css-exercise-2 li:last-child {
+            color: darkorchid;
+            font-weight: bold;
+        }
+        
+        /* 相对定位与绝对定位演示样式 */
+        .position-demo-container {
+            max-width: 100%;
+            overflow: auto;
+        }
+        
+        .position-demo {
+            width: 960px;
+            margin: 0 auto;
+            font-family: "微软雅黑", sans-serif;
+            font-size: 18px;
+            line-height: 1.8em;
+            min-width: 300px;
+        }
+        
+        .position-demo div {
+            width: 300px;
+            float: left;
+            margin-right: 30px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .position-demo .relative {
+            position: relative;
+            top: 150px;
+        }
+        
+        .position-demo .absolute {
+            position: absolute;
+            top: 150px;
+        }
+        
+        .position-demo .bg {
+            background-color: #fcc;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .position-demo h2 {
+            color: #ff6b9d;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ffc8dd;
+            padding-bottom: 5px;
+        }
+        
+        .position-demo p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .position-demo code {
+            display: block;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: monospace;
+            color: #333;
+        }
+        
+        .position-explanation {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid #ffafcc;
+        }
+        
+        .position-explanation h3 {
+            color: #ff6b9d;
+            margin-bottom: 15px;
+        }
+        
+        .position-explanation ul {
+            padding-left: 20px;
+        }
+        
+        .position-explanation li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        /* CSS练习2样式 */
+        .css-practice-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .css-practice-container h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b9d, #ff8eb4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 20px 0;
+            border-bottom: 2px solid #ffc8dd;
+        }
+        
+        .css-practice-container h2 {
+            color: #ff6b9d;
+            margin: 25px 0 15px;
+            font-size: 1.8rem;
+            border-left: 4px solid #ffafcc;
+            padding-left: 10px;
+        }
+        
+        .css-practice-container .box {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #ff6b9d;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            background-color: #fff5f8;
+            box-shadow: 0 4px 10px rgba(255,107,157,0.2);
+        }
+        
+        .css-practice-container ul {
+            margin: 15px 0 15px 30px;
+            list-style-type: none;
+        }
+        
+        .css-practice-container li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .css-practice-container li:before {
+            content: "•";
+            color: #ff6b9d;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+        
+        .css-practice-container .inline-list li {
+            display: inline-block;
+            margin-right: 15px;
+            background-color: #ffeef2;
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #ffc8dd;
+        }
+        
+        .css-practice-container .flex-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: #fff5f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .css-practice-container .flex-container p {
+            background-color: #ffeef2;
+            border: 1px solid #ff6b9d;
+            margin-right: 1em;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .css-practice-container .hidden-item {
+            display: none;
+        }
+        
+        /* JavaScript学习页面样式 */
+        .js-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .js-container h1 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #4a69bd, #6a89cc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 10px 0;
+            border-bottom: 2px solid #a4b0be;
+        }
+        
+        .js-container h2 {
+            color: #4a69bd;
+            margin: 25px 0 15px;
+            font-size: 1.6rem;
+            border-left: 4px solid #6a89cc;
+            padding-left: 10px;
+        }
+        
+        .js-container .code-block {
+            background-color: #2d3436;
+            color: #f1f2f6;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            tab-size: 4;
+        }
+        
+        .js-container .console-output {
+            background-color: #1e272e;
+            color: #05c46b;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            min-height: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .js-container .console-title {
+            color: #ffd32a;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .js-container .code-comment {
+            color: #808e9b;
+        }
+        
+        .js-container .code-keyword {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .js-container .code-string {
+            color: #05c46b;
+        }
+        
+        .js-container .code-number {
+            color: #0fbcf9;
+        }
+
+        /* JavaScript练习2样式 */
+        .js-practice-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .js-practice-container h1 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b9d, #ff8eb4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 10px 0;
+            border-bottom: 2px solid #ffc8dd;
+        }
+        
+        .js-practice-container h2 {
+            color: #ff6b9d;
+            margin: 25px 0 15px;
+            font-size: 1.6rem;
+            border-left: 4px solid #ffafcc;
+            padding-left: 10px;
+        }
+        
+        .js-practice-container .demo-area {
+            background-color: #fff5f8;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid #ffc8dd;
+            box-shadow: 0 5px 15px rgba(255,107,157,0.1);
+        }
+        
+        .js-practice-container .code-sample {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            border-left: 4px solid #ff6b9d;
+        }
+        
+        .js-practice-container .output-area {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4a69bd;
+            min-height: 100px;
+        }
+        
+        /* CSS7 JavaScript练习页面样式 */
+        .js-exercise-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 25px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .js-exercise-container h1 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b9d, #ff8eb4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 10px 0;
+            border-bottom: 2px solid #ffc8dd;
+        }
+        
+        .js-exercise-container .demo-area {
+            background-color: #f0f7ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid #a4b0be;
+        }
+        
+        .js-exercise-container .output-area {
+            background-color: #2d3436;
+            color: #05c46b;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            min-height: 100px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .js-exercise-container .output-title {
+            color: #ffd32a;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .js-exercise-container .code-block {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            border-left: 4px solid #ff6b9d;
+        }
+        
+        /* CSS8 核心概念展示样式 */
+        .css8-container {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .css8-container h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #ff6b9d, #ff8eb4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            padding: 20px 0;
+            border-bottom: 2px solid #ffc8dd;
+        }
+        
+        .css8-container section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #fff5f8;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(255,120,170,0.1);
+        }
+        
+        .css8-container h2 {
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            border-bottom: 2px solid #ffc8dd;
+            padding-bottom: 10px;
+        }
+        
+        .css8-container .box {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed #ff6b9d;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 20px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .css8-container .display-demo p {
+            display: inline;
+            margin-right: 15px;
+            padding: 5px 10px;
+            background-color: #ffeef2;
+            border-radius: 4px;
+        }
+        
+        .css8-container .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .css8-container .flex-container p {
+            flex: 1;
+            min-width: 150px;
+            border: 1px solid #ff6b9d;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+            text-align: center;
+        }
+        
+        .css8-container .animate-box {
+            width: 100px;
+            height: 100px;
+            background-color: #ffc8dd;
+            text-align: center;
+            line-height: 100px;
+            margin-top: 20px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .css8-container .animate-box:hover {
+            border-radius: 50px;
+            background-color: #ff6b9d;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        /* 新增AI助手样式 */
+        .ai-assistant-notice {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            max-width: 300px;
+            z-index: 1001;
+            display: none;
+            animation: fadeIn 0.5s;
+            border: 1px solid #ffc8dd;
+        }
+        
+        .ai-assistant-notice h3 {
+            color: #ff6b9d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .ai-assistant-notice h3 i {
+            font-size: 1.2em;
+        }
+        
+        .ai-assistant-notice p {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: #5a3e51;
+            line-height: 1.5;
+        }
+        
+        .ai-assistant-notice .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .ai-assistant-notice button {
+            flex: 1;
+            background: linear-gradient(45deg, #ffafcc, #ffc8dd);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .ai-assistant-notice button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 3px 8px rgba(255, 120, 170, 0.3);
+        }
+        
+        .ai-assistant-notice button.secondary {
+            background: #f0f0f0;
+            color: #5a3e51;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* AI助手浮动按钮 */
+        .ai-assistant-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b9d, #ff8eb4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .ai-assistant-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6);
+        }
+        
+        .ai-assistant-float i {
+            color: white;
+            font-size: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .modal-content {
+                margin: 20px;
+            }
+            
+            .position-demo {
+                width: 100%;
+            }
+            
+            .position-demo div {
+                float: none;
+                width: 100%;
+                margin-bottom: 30px;
+                margin-right: 0;
+            }
+            
+            .css-practice-container h1 {
+                font-size: 2rem;
+            }
+            
+            .ai-assistant-notice {
+                max-width: 250px;
+                right: 10px;
+                bottom: 10px;
+            }
+            
+            .ai-assistant-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .modal-body {
+                padding: 15px;
+            }
+            
+            .css-exercise h1 {
+                font-size: 1.8rem;
+            }
+            
+            .css-exercise-2 h1 {
+                font-size: 1.8rem;
+            }
+            
+            .css-practice-container h1 {
+                font-size: 1.8rem;
+            }
+            
+            .css-practice-container .box {
+                width: 100%;
+                height: auto;
+            }
+            
+            .js-exercise-container {
+                padding: 15px;
+            }
+            
+            .css8-container .flex-container p {
+                min-width: 100%;
+            }
+            
+            .ai-assistant-notice {
+                max-width: 90%;
+                left: 5%;
+                right: 5%;
+                bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS课程展示</h1>
+        <p class="subtitle">探索CSS的强大功能与设计美学 - 从基础概念到高级技巧，全面提升您的网页设计能力</p>
+    </header>
+    
+    <main class="container">
+        <!-- 卡片保持不变 -->
+        <!-- CSS 基础卡片 -->
+        <div class="card css-card">
+            <div class="card-number">01</div>
+            <div class="card-icon"><i class="fas fa-code"></i></div>
+            <h2>CSS1</h2>
+            <p>CSS1是CSS的第一个官方版本，于1996年发布。它提供了基本的样式控制，如字体、颜色、文本对齐和元素间距。</p>
+            <button class="card-btn js-open-modal" data-modal="css1-modal">查看练习</button>
+        </div>
+        
+        <div class="card css-card">
+            <div class="card-number">02</div>
+            <div class="card-icon"><i class="fas fa-paint-brush"></i></div>
+            <h2>CSS2</h2>
+            <p>1998年发布的CSS2引入了定位模型、媒体类型、表格布局和更复杂的字体控制，大大增强了网页设计能力。</p>
+            <button class="card-btn js-open-modal" data-modal="css2-modal">查看练习</button>
+        </div>
+        
+        <!-- CSS3卡片 -->
+        <div class="card css-card">
+            <div class="card-number">03</div>
+            <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+            <h2>CSS3</h2>
+            <p>CSS3是当前广泛使用的版本，引入了圆角、阴影、渐变、动画、媒体查询等现代网页设计所需的关键特性。</p>
+            <button class="card-btn js-open-modal" data-modal="css3-modal">查看定位示例</button>
+        </div>
+        
+        <!-- CSS4卡片 -->
+        <div class="card css-card">
+            <div class="card-number">04</div>
+            <div class="card-icon"><i class="fas fa-magic"></i></div>
+            <h2>CSS4</h2>
+            <p>CSS4正在逐步实现，包含更复杂的选择器、高级网格布局、变量、混合模式等下一代CSS特性。</p>
+            <button class="card-btn js-open-modal" data-modal="css4-modal">查看练习2</button>
+        </div>
+        
+        <!-- CSS5卡片 - 修改为打开JavaScript学习模态框 -->
+        <div class="card css-card">
+            <div class="card-number">05</div>
+            <div class="card-icon"><i class="fas fa-cube"></i></div>
+            <h2>CSS5</h2>
+            <p>CSS5聚焦于3D变换、高级动画、滤镜效果和更精细的布局控制，为创造沉浸式体验提供支持。</p>
+            <button class="card-btn js-open-modal" data-modal="css5-modal">学习JavaScript</button>
+        </div>
+        
+        <!-- 修改CSS6卡片，添加模态框打开功能 -->
+        <div class="card css-card">
+            <div class="card-number">06</div>
+            <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+            <h2>CSS6</h2>
+            <p>CSS6增强响应式设计能力，优化性能，引入更智能的布局系统，提升跨设备用户体验。</p>
+            <button class="card-btn js-open-modal" data-modal="css6-modal">查看JavaScript练习</button>
+        </div>
+        
+        <!-- 修改CSS7卡片，连接到新的JavaScript练习模态框 -->
+        <div class="card css-card">
+            <div class="card-number">07</div>
+            <div class="card-icon"><i class="fas fa-bolt"></i></div>
+            <h2>CSS7</h2>
+            <p>CSS7将包含AI辅助样式、自适应组件、动态主题和更强大的变量功能，简化复杂设计实现。</p>
+            <button class="card-btn js-open-modal" data-modal="css7-modal">查看JavaScript练习</button>
+        </div>
+        
+        <!-- CSS8卡片 - 连接到核心概念展示 -->
+        <div class="card css-card">
+            <div class="card-number">08</div>
+            <div class="card-icon"><i class="fas fa-eye"></i></div>
+            <h2>CSS8</h2>
+            <p>CSS8展望未来，探索VR/AR样式、语音界面设计、生物识别主题等前沿技术应用。</p>
+            <button class="card-btn js-open-modal" data-modal="css8-modal">查看核心概念</button>
+        </div>
+        
+        <!-- 嵌套演示卡片 - 修改为AI助手卡片 -->
+        <div class="card special-card">
+            <div class="card-number">AI</div>
+            <div class="card-icon"><i class="fas fa-robot"></i></div>
+            <h2>AI助手</h2>
+            <p>集成有道AI助手，提供实时答疑、代码解释和学习建议。点击下方按钮立即体验智能学习助手。</p>
+            
+            <div class="nested-demo">
+                <div class="nested-item">
+                    <i class="fas fa-question-circle"></i>
+                    <p>实时答疑</p>
+                </div>
+                <div class="nested-item">
+                    <i class="fas fa-code"></i>
+                    <p>代码解释</p>
+                </div>
+                <div class="nested-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>学习建议</p>
+                </div>
+                <div class="nested-item">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <p>学习辅导</p>
+                </div>
+            </div>
+            
+            <a href="javascript:void(0);" id="ai-assistant-btn" class="card-btn" style="margin-top: 20px;">嵌入演示</a>
+        </div>
+    </main>
+    
+    <!-- 模态框保持不变 -->
+    <!-- CSS1 模态框 -->
+    <div id="css1-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">CSS基础语法练习</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="css-exercise">
+                    <h1 style="color: darkblue">CSS练习</h1>
+                    <h2 id="CSSbase">CSS语法基础</h2>
+                    <p class="abstract">
+                        这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个
+                    </p>
+                    <p>
+                        这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个
+                    </p>
+                    <h2>选择符</h2>
+                    <p>
+                        这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个这是一个段落，段落中包含了一个
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS2 模态框 -->
+    <div id="css2-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">CSS样式表应用练习</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="css-exercise css-exercise-2">
+                    <h1>CSS练习</h1>
+                    <div>
+                        <h2>333cccc使用样式表的三种方式</h2>
+                        <ul>
+                            <li>外部样式表</li>
+                            <li>内部样式表</li>
+                            <li style="color: darkorchid">内嵌样式表</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS3 模态框 -->
+    <div id="css3-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">CSS3定位示例 - 相对定位与绝对定位</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="position-demo-container">
+                    <div class="position-demo">
+                        <div>
+                            <h2>正常信息流</h2>
+                            <p>孩子，你真是快活啊，一早晨坐在泥土里，耍着折下来的小树枝。</p>
+                            <p>我微笑着看你在那里耍着那根折下来的小树枝。</p>
+                            <p class="bg">我正忙着算账，一小时一小时在那里加叠数字。</p>
+                            <p>
+                                也许你在看我，想到："这种好没趣的游戏，竟把你的一早晨的好时间浪费掉了！"
+                            </p>
+                            <p>孩子，我忘了聚精会神玩耍树枝与泥饼的方法了。</p>
+                        </div>
+                        <div>
+                            <h2>相对定位</h2>
+                            <p>孩子，你真是快活啊，一早晨坐在泥土里，耍着折下来的小树枝。</p>
+                            <p>我微笑着看你在那里耍着那根折下来的小树枝。</p>
+                            <p class="bg relative">我正忙着算账，一小时一小时在那里加叠数字。</p>
+                            <p>
+                                也许你在看我，想到："这种好没趣的游戏，竟把你的一早晨的好时间浪费掉了！"
+                            </p>
+                            <p>孩子，我忘了聚精会神玩耍树枝与泥饼的方法了。</p>
+                            <code>.relative { position: relative; top:150px;}</code>
+                        </div>
+                        <div>
+                            <h2>绝对定位</h2>
+                            <p>孩子，你真是快活啊，一早晨坐在泥土里，耍着折下来的小树枝。</p>
+                            <p>我微笑着看你在那里耍着那根折下来的小树枝。</p>
+                            <p class="bg absolute">我正忙着算账，一小时一小时在那里加叠数字。</p>
+                            <p>
+                                也许你在看我，想到："这种好没趣的游戏，竟把你的一早晨的好时间浪费掉了！"
+                            </p>
+                            <p>孩子，我忘了聚精会神玩耍树枝与泥饼的方法了。</p>
+                            <code>.absolute { position: absolute; top:150px;} </code>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="position-explanation">
+                    <h3>相对定位与绝对定位的区别</h3>
+                    <ul>
+                        <li><strong>相对定位 (position: relative)</strong>：元素相对于其正常位置进行偏移，但保留原始空间</li>
+                        <li><strong>绝对定位 (position: absolute)</strong>：元素脱离文档流，相对于最近的非static定位祖先元素定位</li>
+                        <li>相对定位常用于微调元素位置，不影响其他元素的布局</li>
+                        <li>绝对定位常用于创建悬浮元素、弹出层等需要脱离文档流的场景</li>
+                        <li>示例中相对定位的元素保留了原始空间，而绝对定位的元素不占用布局空间</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS4 模态框 -->
+    <div id="css4-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">CSS练习2 - 核心概念演示</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="css-practice-container">
+                    <h1>CSS基础知识：背景、盒模型、布局、动画</h1>
+                    
+                    <h2>CSS 背景</h2>
+                    <div>
+                        “cascading” 的音标是 /kæˈskeɪdɪŋ/。CSS背景属性允许您设置元素的背景效果，
+                        包括背景颜色、背景图片、背景定位和重复方式等。
+                    </div>
+                    
+                    <h2>CSS 盒模型</h2>
+                    <div class="box">
+                        盒模型是 CSS 布局的基石，它定义了元素在页面上的位置和大小。在 CSS 中，每个
+                        元素都被看作是一个矩形的盒子，这个盒子由内容、内边距、边框和外边距组成。
+                    </div>
+                    
+                    <h2>信息流、display以及position</h2>
+                    <ul>
+                        <li>正常流中的列表项目</li>
+                        <li>正常流中的列表项目</li>
+                        <li>正常流中的列表项目</li>
+                    </ul>
+                    <ul class="inline-list">
+                        <li>内联列表项目</li>
+                        <li>内联列表项目</li>
+                        <li>内联列表项目</li>
+                        <li class="hidden-item">隐藏的列表项目</li>
+                    </ul>
+                    
+                    <h2>flex布局</h2>
+                    <div class="flex-container">
+                        <p>1的点点滴滴的点点滴滴</p>
+                        <p>2的点点滴滴的点点滴滴</p>
+                        <p>3的点点滴滴的点点滴滴</p>
+                    </div>
+                    
+                    <div class="css-features-summary">
+                        <h2>CSS4新特性预览</h2>
+                        <ul>
+                            <li><strong>变量(CSS Variables)</strong>：使用--前缀定义，var()函数调用</li>
+                            <li><strong>嵌套规则(Nesting)</strong>：更简洁的CSS结构组织方式</li>
+                            <li><strong>容器查询(Container Queries)</strong>：根据容器尺寸而非视口应用样式</li>
+                            <li><strong>层叠层(Cascade Layers)</strong>：更精细的样式优先级控制</li>
+                            <li><strong>颜色函数(Color Functions)</strong>：更强大的颜色操作能力</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS5 模态框 - 新增JavaScript学习内容 -->
+    <div id="css5-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">JavaScript 核心语法学习一</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="js-container">
+                    <h1>JavaScript 核心语法学习</h1>
+                    
+                    <h2>变量声明与数据类型</h2>
+                    <div class="code-block">
+<span class="code-keyword">let</span> a = <span class="code-number">100</span>
+<span class="code-comment">// alert(a)</span>
+console.log(a)
+<span class="code-keyword">const</span> api_key = <span class="code-string">'ssssx-=-dddd'</span>
+console.log(api_key)
+console.log(<span class="code-keyword">typeof</span> a, <span class="code-keyword">typeof</span> api_key, <span class="code-keyword">typeof</span> <span class="code-keyword">true</span>)
+<span class="code-keyword">let</span> b = <span class="code-string">'1'</span>
+console.log(a + b)
+console.log(a + <span class="code-keyword">Number</span>(b))
+<span class="code-keyword">let</span> c = <span class="code-string">'100'</span>
+console.log(<span class="code-keyword">typeof</span> a, <span class="code-keyword">typeof</span> c)
+console.log(a == c)
+console.log(a === c)
+                    </div>
+                    
+                    <h2>分支语句</h2>
+                    <div class="code-block">
+<span class="code-comment">// 分支语句</span>
+<span class="code-keyword">let</span> current_time = <span class="code-string">'12:20'</span>
+<span class="code-keyword">if</span> (current_time == <span class="code-string">'12:20'</span>) {
+    console.log(<span class="code-string">'冲啊！'</span>)
+} <span class="code-keyword">else</span> {
+    console.log(<span class="code-string">'假装学习……'</span>)
+}
+                    </div>
+                    
+                    <h2>循环语句</h2>
+                    <div class="code-block">
+<span class="code-comment">// for循环</span>
+<span class="code-keyword">for</span> (<span class="code-keyword">let</span> i = <span class="code-number">1</span>; i <= <span class="code-number">10</span>; i++) {
+    console.log(i)
+}
+
+<span class="code-comment">// while循环</span>
+<span class="code-keyword">let</span> hug = <span class="code-number">60</span>
+<span class="code-keyword">while</span> (hug > <span class="code-number">0</span>) {
+    console.log(<span class="code-string">'继续干饭……'</span>)
+    hug = hug - <span class="code-number">10</span>
+}
+                    </div>
+                    
+                    <h2>函数定义与使用</h2>
+                    <div class="code-block">
+<span class="code-comment">// 函数</span>
+<span class="code-keyword">function</span> intro() {
+    console.log(<span class="code-string">'你好，我是一个脚本！'</span>)
+}
+intro()
+
+<span class="code-keyword">function</span> intro2(content) {
+    console.log(<span class="code-string">'以下是我介绍的内容： '</span> + <span class="code-keyword">String</span>(content))
+}
+console.log(<span class="code-keyword">typeof</span> intro2(<span class="code-string">'这是传入的参数'</span>))
+
+<span class="code-keyword">function</span> intro3(content1, content2) {
+    console.log(<span class="code-string">'以下是我介绍的内容： '</span> + <span class="code-keyword">String</span>(content1) + <span class="code-keyword">String</span>(content2))
+}
+intro3(<span class="code-string">'参数1'</span>, <span class="code-string">'参数2'</span>, <span class="code-number">444</span>)
+
+<span class="code-keyword">function</span> intro4(content) {
+    console.log(content)
+    <span class="code-keyword">return</span> content + <span class="code-string">'这是返回值'</span>
+}
+intro4(<span class="code-string">'带返回值的函数'</span>)
+<span class="code-keyword">let</span> result = intro4(<span class="code-string">'带返回值的函数'</span>)
+console.log(result)
+                    </div>
+                    
+                    <h2>控制台输出结果</h2>
+                    <div class="console-title">控制台输出:</div>
+                    <div class="console-output" id="console-output">
+                        <!-- JavaScript输出将显示在这里 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS6 模态框 - 新增JavaScript练习2 -->
+    <div id="css6-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">JavaScript 语法练习2</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="js-practice-container">
+                    <h1>JavaScript 语法练习2</h1>
+                    
+                    <div class="demo-area">
+                        <h2 id="demo" onclick="alert('你点我干啥！')">这是一个标题的原始内容</h2>
+                        <div>
+                            <p id="anotherp">这是一个段落</p>
+                        </div>
+                    </div>
+                    
+                    <h2>类和对象</h2>
+                    <div class="code-sample">
+                        // 1. 定义一个类
+                        class Student {
+                            // 构造函数
+                            constructor(name, age, school, grade) {
+                                this.name = name;
+                                this.age = age;
+                                this.school = school;
+                                this.grade = grade;
+                            }
+                            // 方法
+                            learn(subject = "语文") {
+                                console.log(`${this.name}正在学习${subject}，真棒！`);
+                            }
+                            exam() {
+                                console.log(`${this.name} 正在考试`);
+                            }
+                        }
+                        
+                        // 2. 创建对象
+                        let xiaoming = new Student("小明", 7, "实验小学", 1);
+                        xiaoming.learn("英语");
+                        xiaoming.exam();
+                        
+                        class Undergraduate extends Student {
+                            constructor(name, age, school, grade, major, experience) {
+                                super(name, age, school, grade);
+                                this.major = major;
+                                this.experience = experience;
+                            }
+
+                            intern(corp) {
+                                console.log(`${this.name}在${corp}实习，获得经验值1000`);
+                                super.exam();
+                            }
+                        }
+
+                        let xiaoming2 = new Undergraduate("小明", 17, "科技大学", 1, "新闻学", 0);
+                        xiaoming2.intern("腾讯");
+                    </div>
+                    
+                    <h2>回调函数和异步操作</h2>
+                    <div class="code-sample">
+                        // 回调函数，函数作为参数传递给另一个函数
+                        console.log("111111");
+
+                        setTimeout(function () { 
+                            console.log("222222") 
+                        }, 1000);
+
+                        console.log("333333");
+                    </div>
+                    
+                    <h2>DOM操作</h2>
+                    <div class="code-sample">
+                        let myh1 = document.getElementById("demo");
+                        console.log(myh1);
+                        // 1. 改变元素的内容
+                        myh1.innerHTML = "这是来自脚本的动态内容";
+                        // 2. 改变元素的样式
+                        myh1.style.color = "#888";
+
+                        let myp = document.getElementById("anotherp");
+                        myp.onclick = function () {
+                            alert("你好啊！");
+                        }
+
+                        window.onload = function () {
+                            alert("页面加载完成");
+                        }
+                    </div>
+                    
+                    <div class="output-area">
+                        <h3>代码执行结果：</h3>
+                        <div id="js-output"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS7 模态框 - 新增JavaScript练习 -->
+    <div id="css7-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">JavaScript 语法练习</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="js-exercise-container">
+                    <h1>JavaScript 语法练习</h1>
+                    
+                    <div class="demo-area">
+                        <h2 id="js-demo" onclick="alert('你点击了标题！')">这是一个标题的原始内容</h2>
+                        <div>
+                            <p id="js-anotherp">这是一个段落</p>
+                        </div>
+                    </div>
+                    
+                    <div class="output-area">
+                        <div class="output-title">控制台输出:</div>
+                        <div id="js-exercise-output"></div>
+                    </div>
+                    
+                    <div class="code-block">
+                        // 类和对象
+                        class Student {
+                            // 构造函数
+                            constructor(name, age, school, grade) {
+                                this.name = name;
+                                this.age = age;
+                                this.school = school;
+                                this.grade = grade;
+                            }
+                            // 方法
+                            learn(subject = "语文") {
+                                console.log(`${this.name}正在学习${subject}，真棒！`);
+                            }
+                            exam() {
+                                console.log(`${this.name} 正在考试`);
+                            }
+                        }
+                        
+                        // 创建对象
+                        let xiaoming = new Student("小明", 7, "实验小学", 1);
+                        xiaoming.learn("英语");
+                        xiaoming.exam();
+                        
+                        class Undergraduate extends Student {
+                            constructor(name, age, school, grade, major, experience) {
+                                super(name, age, school, grade);
+                                this.major = major;
+                                this.experience = experience;
+                            }
+
+                            intern(corp) {
+                                console.log(`${this.name}在${corp}实习，获得经验值1000`);
+                                super.exam();
+                            }
+                        }
+
+                        let xiaoming2 = new Undergraduate("小明", 17, "科技大学", 1, "新闻学", 0);
+                        xiaoming2.intern("腾讯");
+                        
+                        // 回调函数和异步操作
+                        console.log("111111");
+                        setTimeout(function () { console.log("222222") }, 1000);
+                        console.log("333333");
+                        
+                        // DOM操作
+                        let myh1 = document.getElementById("js-demo");
+                        console.log(myh1);
+                        myh1.innerHTML = "这是来自脚本的动态内容";
+                        myh1.style.color = "#888";
+
+                        let myp = document.getElementById("js-anotherp");
+                        myp.onclick = function () {
+                            alert("你好啊！");
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS8 模态框 - 新增核心概念展示 -->
+    <div id="css8-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">CSS8 - 核心概念展示</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="css8-container">
+                    <h1>CSS 核心概念：背景、盒模型、布局、动画</h1>
+                    
+                    <section>
+                        <h2>背景</h2>
+                        <div>
+                            <p>
+                                "cascading" 的音标是 /kæˈskeɪdɪŋ/。CSS背景属性允许您设置元素的背景效果，
+                                包括背景颜色、背景图片、背景定位和重复方式等。
+                            </p>
+                            <p>
+                                CSS背景属性包括：
+                                <ul>
+                                    <li><code>background-color</code>: 设置背景颜色</li>
+                                    <li><code>background-image</code>: 设置背景图片</li>
+                                    <li><code>background-position</code>: 设置背景位置</li>
+                                    <li><code>background-repeat</code>: 设置背景重复方式</li>
+                                    <li><code>background-size</code>: 设置背景尺寸</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </section>
+                    
+                    <section>
+                        <h2>盒模型</h2>
+                        <div>
+                            <p>
+                                盒模型是 CSS 布局的基石，它定义了元素在页面上的位置和大小。在 CSS 中，每个
+                                元素都被看作是一个矩形的盒子，这个盒子由内容、内边距、边框和外边距组成。
+                            </p>
+                            <div class="box">box 中的内容 1</div>
+                            <div class="box">box 中的内容 2</div>
+                            <p>
+                                CSS盒模型属性包括：
+                                <ul>
+                                    <li><code>width</code> 和 <code>height</code>: 内容区域的宽度和高度</li>
+                                    <li><code>padding</code>: 内容与边框之间的内边距</li>
+                                    <li><code>border</code>: 元素的边框</li>
+                                    <li><code>margin</code>: 元素与其他元素之间的外边距</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </section>
+                    
+                    <section>
+                        <h2>布局</h2>
+                        <div>
+                            <h3>display 的不同取值</h3>
+                            <div class="display-demo">
+                                <p>块级元素 (block)</p>
+                                <p>内联元素 (inline)</p>
+                                <p>内联块元素 (inline-block)</p>
+                                <p style="display: none">隐藏元素 (none)</p>
+                            </div>
+                            
+                            <h3>Flexbox 布局</h3>
+                            <div class="flex-container">
+                                <p>项目 1</p>
+                                <p>项目 2</p>
+                                <p>项目 3</p>
+                                <p>项目 4</p>
+                            </div>
+                            
+                            <p>
+                                CSS布局技术包括：
+                                <ul>
+                                    <li>正常流 (Normal Flow)</li>
+                                    <li>浮动 (Float)</li>
+                                    <li>定位 (Position)</li>
+                                    <li>Flexbox</li>
+                                    <li>Grid</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </section>
+                    
+                    <section>
+                        <h2>动画</h2>
+                        <div>
+                            <p>
+                                CSS动画允许您创建平滑的过渡和动画效果，而不需要使用JavaScript。CSS动画由两个主要部分组成：
+                                <ul>
+                                    <li><code>@keyframes</code>: 定义动画序列</li>
+                                    <li><code>animation</code> 属性: 将关键帧应用到元素</li>
+                                </ul>
+                            </p>
+                            <p>
+                                动画必须要有起始状态、结束状态和持续时间。
+                            </p>
+                            <div class="animate-box">悬停查看动画效果</div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 CSS课程展示 | P231014894陈彤蕊 | 期末作业</p>
+    </footer>
+
+    <!-- AI助手浮动按钮 -->
+    <div class="ai-assistant-float" id="ai-float-btn">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- AI助手提示框 -->
+    <div class="ai-assistant-notice" id="ai-assistant-notice">
+        <h3><i class="fas fa-robot"></i> AI助手已激活</h3>
+        <p>有道AI助手已成功嵌入本页面，您现在可以随时使用AI助手获得实时答疑、代码解释和学习建议。</p>
+        <p>点击下方按钮即可打开AI助手面板。</p>
+        <div class="actions">
+            <button onclick="openAIAssistant()">打开AI助手</button>
+            <button class="secondary" onclick="closeAINotice()">稍后再说</button>
+        </div>
+    </div>
+
+    <!-- AI助手脚本 -->
+    <script
+        src="https://ai.youdao.com/saas/qanything/js/agent-iframe-min.js"
+        id="qanything-iframe"
+        data-agent-src="https://ai.youdao.com/saas/qanything/#/bots/FC17636AC3764FD4/share"
+        data-default-open=false
+        data-drag=false
+        data-open-icon="https://download.ydstatic.com/ead/icon-qanything-iframe-btn.png"
+        data-close-icon="https://download.ydstatic.com/ead/icon-qanything-iframe-btn.png"
+        defer
+    ></script>
+    
+    <script>
+        // 模态框功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有打开模态框的按钮
+            const openModalButtons = document.querySelectorAll('.js-open-modal');
+            // 获取所有关闭按钮
+            const closeModalButtons = document.querySelectorAll('.close-modal');
+            // 获取所有模态框
+            const modals = document.querySelectorAll('.modal');
+            
+            // 打开模态框函数
+            function openModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden'; // 防止背景滚动
+                    
+                    // 根据模态框ID执行特定代码
+                    if (modalId === 'css5-modal') {
+                        executeJavaScriptDemo();
+                    }
+                    else if (modalId === 'css6-modal') {
+                        executeJavaScriptExercise2();
+                    }
+                    else if (modalId === 'css7-modal') {
+                        executeJavaScriptExercise3();
+                    }
+                }
+            }
+            
+            // 关闭模态框函数
+            function closeModal(modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // 恢复背景滚动
+            }
+            
+            // 为每个打开按钮添加事件监听器
+            openModalButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    openModal(modalId);
+                });
+            });
+            
+            // 为每个关闭按钮添加事件监听器
+            closeModalButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    closeModal(modal);
+                });
+            });
+            
+            // 点击模态框外部关闭
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal(this);
+                    }
+                });
+            });
+            
+            // 按ESC键关闭模态框
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.style.display === 'block') {
+                            closeModal(modal);
+                        }
+                    });
+                }
+            });
+            
+            // 执行JavaScript演示代码并显示输出
+            function executeJavaScriptDemo() {
+                const consoleOutput = document.getElementById('console-output');
+                consoleOutput.innerHTML = '';
+                
+                // 捕获console.log输出
+                const originalLog = console.log;
+                console.log = function(message) {
+                    originalLog.apply(console, arguments);
+                    const logEntry = document.createElement('div');
+                    logEntry.textContent = '> ' + message;
+                    consoleOutput.appendChild(logEntry);
+                };
+                
+                // 执行JavaScript代码
+                try {
+                    let a = 100;
+                    console.log(a);
+                    const api_key = 'ssssx-=-dddd';
+                    console.log(api_key);
+                    console.log(typeof a, typeof api_key, typeof true);
+                    let b = '1';
+                    console.log(a + b);
+                    console.log(a + Number(b));
+                    let c = '100';
+                    console.log(typeof a, typeof c);
+                    console.log(a == c);
+                    console.log(a === c);
+                    
+                    // 分支语句
+                    let current_time = '12:20';
+                    if (current_time == '12:20') {
+                        console.log('冲啊！');
+                    } else {
+                        console.log('假装学习……');
+                    }
+                    
+                    // for循环
+                    for (let i = 1; i <= 10; i++) {
+                        console.log(i);
+                    }
+                    
+                    // while循环
+                    let hug = 60;
+                    while (hug > 0) {
+                        console.log('继续干饭……');
+                        hug = hug - 10;
+                    }
+                    
+                    // 函数
+                    function intro() {
+                        console.log('你好，我是一个脚本！');
+                    }
+                    intro();
+                    
+                    function intro2(content) {
+                        console.log('以下是我介绍的内容： ' + String(content));
+                    }
+                    console.log(typeof intro2('这是传入的参数'));
+                    
+                    function intro3(content1, content2) {
+                        console.log('以下是我介绍的内容： ' + String(content1) + String(content2));
+                    }
+                    intro3('参数1', '参数2', 444);
+                    
+                    function intro4(content) {
+                        console.log(content);
+                        return content + '这是返回值';
+                    }
+                    intro4('带返回值的函数');
+                    let result = intro4('带返回值的函数');
+                    console.log(result);
+                    
+                } catch (error) {
+                    console.log('执行出错: ' + error.message);
+                }
+                
+                // 恢复原始console.log
+                console.log = originalLog;
+            }
+            
+            // 执行JavaScript练习2代码
+            function executeJavaScriptExercise2() {
+                const outputArea = document.getElementById('js-output');
+                outputArea.innerHTML = '';
+                
+                // 捕获console.log输出
+                const originalLog = console.log;
+                console.log = function(message) {
+                    originalLog.apply(console, arguments);
+                    const logEntry = document.createElement('div');
+                    logEntry.textContent = '> ' + message;
+                    outputArea.appendChild(logEntry);
+                };
+                
+                try {
+                    // 类和对象
+                    class Student {
+                        constructor(name, age, school, grade) {
+                            this.name = name;
+                            this.age = age;
+                            this.school = school;
+                            this.grade = grade;
+                        }
+                        
+                        learn(subject = "语文") {
+                            console.log(`${this.name}正在学习${subject}，真棒！`);
+                        }
+                        
+                        exam() {
+                            console.log(`${this.name} 正在考试`);
+                        }
+                    }
+                    
+                    let xiaoming = new Student("小明", 7, "实验小学", 1);
+                    xiaoming.learn("英语");
+                    xiaoming.exam();
+                    
+                    class Undergraduate extends Student {
+                        constructor(name, age, school, grade, major, experience) {
+                            super(name, age, school, grade);
+                            this.major = major;
+                            this.experience = experience;
+                        }
+                        
+                        intern(corp) {
+                            console.log(`${this.name}在${corp}实习，获得经验值1000`);
+                            super.exam();
+                        }
+                    }
+                    
+                    let xiaoming2 = new Undergraduate("小明", 17, "科技大学", 1, "新闻学", 0);
+                    xiaoming2.intern("腾讯");
+                    
+                    // 回调函数示例
+                    console.log("111111");
+                    setTimeout(function() { 
+                        console.log("222222") 
+                    }, 1000);
+                    console.log("333333");
+                    
+                    // DOM操作
+                    let myh1 = document.getElementById("demo");
+                    console.log(myh1);
+                    myh1.innerHTML = "这是来自脚本的动态内容";
+                    myh1.style.color = "#888";
+                    
+                    let myp = document.getElementById("anotherp");
+                    myp.onclick = function() {
+                        alert("你好啊！");
+                    }
+                    
+                    console.log("页面加载完成");
+                    
+                } catch (error) {
+                    console.log('执行出错: ' + error.message);
+                }
+                
+                // 恢复原始console.log
+                console.log = originalLog;
+            }
+            
+            // 执行JavaScript练习3代码 (CSS7)
+            function executeJavaScriptExercise3() {
+                const outputArea = document.getElementById('js-exercise-output');
+                outputArea.innerHTML = '';
+                
+                // 捕获console.log输出
+                const originalLog = console.log;
+                console.log = function(message) {
+                    originalLog.apply(console, arguments);
+                    const logEntry = document.createElement('div');
+                    logEntry.textContent = '> ' + message;
+                    outputArea.appendChild(logEntry);
+                };
+                
+                try {
+                    // 类和对象
+                    class Student {
+                        constructor(name, age, school, grade) {
+                            this.name = name;
+                            this.age = age;
+                            this.school = school;
+                            this.grade = grade;
+                        }
+                        
+                        learn(subject = "语文") {
+                            console.log(`${this.name}正在学习${subject}，真棒！`);
+                        }
+                        
+                        exam() {
+                            console.log(`${this.name} 正在考试`);
+                        }
+                    }
+                    
+                    let xiaoming = new Student("小明", 7, "实验小学", 1);
+                    xiaoming.learn("英语");
+                    xiaoming.exam();
+                    
+                    class Undergraduate extends Student {
+                        constructor(name, age, school, grade, major, experience) {
+                            super(name, age, school, grade);
+                            this.major = major;
+                            this.experience = experience;
+                        }
+                        
+                        intern(corp) {
+                            console.log(`${this.name}在${corp}实习，获得经验值1000`);
+                            super.exam();
+                        }
+                    }
+                    
+                    let xiaoming2 = new Undergraduate("小明", 17, "科技大学", 1, "新闻学", 0);
+                    xiaoming2.intern("腾讯");
+                    
+                    // 回调函数和异步操作
+                    console.log("111111");
+                    setTimeout(function () { 
+                        console.log("222222") 
+                    }, 1000);
+                    console.log("333333");
+                    
+                    // DOM操作
+                    let myh1 = document.getElementById("js-demo");
+                    console.log(myh1);
+                    myh1.innerHTML = "这是来自脚本的动态内容";
+                    myh1.style.color = "#888";
+
+                    let myp = document.getElementById("js-anotherp");
+                    myp.onclick = function () {
+                        alert("你好啊！");
+                    }
+                    
+                    console.log("JavaScript练习执行完成");
+                    
+                } catch (error) {
+                    console.log('执行出错: ' + error.message);
+                }
+                
+                // 恢复原始console.log
+                console.log = originalLog;
+            }
+            
+            // 为AI助手按钮添加事件监听
+            const aiAssistantBtn = document.getElementById('ai-assistant-btn');
+            if (aiAssistantBtn) {
+                aiAssistantBtn.addEventListener('click', function() {
+                    openAIAssistant();
+                });
+            }
+            
+            // 为浮动按钮添加事件监听
+            const aiFloatBtn = document.getElementById('ai-float-btn');
+            if (aiFloatBtn) {
+                aiFloatBtn.addEventListener('click', function() {
+                    openAIAssistant();
+                });
+            }
+            
+            // 显示AI助手提示
+            function showAINotice() {
+                const notice = document.getElementById('ai-assistant-notice');
+                if (notice) {
+                    notice.style.display = 'block';
+                }
+            }
+            
+            // 关闭AI助手提示
+            function closeAINotice() {
+                const notice = document.getElementById('ai-assistant-notice');
+                if (notice) {
+                    notice.style.display = 'none';
+                }
+            }
+            
+            // 打开AI助手函数
+            window.openAIAssistant = function() {
+                if (window.QAnythingIframe && typeof window.QAnythingIframe.open === 'function') {
+                    window.QAnythingIframe.open();
+                    // 隐藏提示框
+                    closeAINotice();
+                } else {
+                    // 如果AI助手脚本尚未加载完成，显示提示
+                    showAINotice();
+                }
+            }
+            
+            // 检测AI助手脚本是否加载完成
+            function checkAIAssistantLoaded() {
+                if (window.QAnythingIframe) {
+                    // 脚本已加载，显示提示
+                    setTimeout(showAINotice, 2000);
+                } else {
+                    // 如果尚未加载，继续检测
+                    setTimeout(checkAIAssistantLoaded, 500);
+                }
+            }
+            
+            // 页面加载完成后检查AI助手脚本状态
+            setTimeout(checkAIAssistantLoaded, 1000);
+        });
+    </script>
+</body>
+</html>
